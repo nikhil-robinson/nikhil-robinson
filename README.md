@@ -2,13 +2,13 @@
 I'm an embedded developer who loves to use the "I" pronoun - I mean, who doesn't love talking about themselves, am I right? When I'm not busy coding, you can usually find me bragging about my latest project to anyone who will listen. But don't worry, I'm not all talk - I'm also pretty good at what I do. In fact, I'm so good that I sometimes feel like I should just change my name to "I" and be done with it. So if you're looking for a talented embedded developer who's not afraid to put themselves first, look no further - I'm your person!
 
 ### 🔭 My work experince 
-- 2022 Embedded Developer team lead at Bibox labs.
+- 2022 Embedded Developer team lead at Bibox Labs.
 - 2021 Joined Bibox labs as an Embedded Developer.
 - 2021 Developed AMUNET an IDPS system which can be connected to any router with ease.
 - 2020 Developed a Decentralized system for tracking and monitoring agricultural commodity in transist as part of VIGA conducted by GOV of kerala
 - 2019 Founded Techprogeny to help students build their dream projects.
 - 2018 Developed a smart vehicle key less entry system with face detection.
-- 2017 Started pursuing Btech in Electronics and Communication engineering.
+- 2017 Started pursuing B.Tech in Electronics and Communication engineering.
 
 ### 🌱 My skills 
 - Firmware architecture design, including proper planning for maintainability and scalability.
@@ -59,7 +59,7 @@ I'm an embedded developer who loves to use the "I" pronoun - I mean, who doesn't
 
 ### 📫 How to reach me
 
-- [Linkden](https://www.linkedin.com/in/nikhil-robinson/) dm is always open.
+- [Linkdin](https://www.linkedin.com/in/nikhil-robinson/) dm is always open.
 - [Techprogeny](https://techprogeny.com)
 
 
