@@ -59,7 +59,7 @@ I'm an embedded developer who loves to use the "I" pronoun - I mean, who doesn't
 
 ### 📫 How to reach me
 
-- [Linkdin](https://www.linkedin.com/in/nikhil-robinson/) dm is always open.
+- [Linkdein](https://www.linkedin.com/in/nikhil-robinson/) dm is always open.
 - [Techprogeny](https://techprogeny.com)
 
 
