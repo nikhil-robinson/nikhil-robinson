@@ -1,5 +1,12 @@
 ### Hi there 👋
 
+
+### About Me
+
+As an experienced embedded developer and systems engineer, my passion lies in creating robust and maintainable firmware for embedded devices. I thrive on developing code that is easy to read and understand. I have been working remotely for the past three years and greatly value the flexibility it offers.
+
+### My work experince.
+
 <!--
 **nikhil-robinson/nikhil-robinson** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
