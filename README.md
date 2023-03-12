@@ -1,7 +1,7 @@
 ### About Me 😄
-I'm an embedded developer who loves to use the "I" pronoun - I mean, who doesn't love talking about themselves, am I right? When I'm not busy coding, you can usually find me bragging about my latest project to anyone who will listen. But don't worry, I'm not all talk - I'm also pretty good at what I do. In fact, I'm so good that I sometimes feel like I should just change my name to "I" and be done with it. So if you're looking for a talented embedded developer who's not afraid to put themselves first, look no further - I'm your person!
+My name is Nikhil Robinson, and I'm an embedded developer with a passion for programming and electronics. I have experience working on a variety of projects, from designing PCBs to programming microcontrollers. I take pride in writing efficient, clean code that meets project requirements and exceeds expectations. When I'm not busy with work, I enjoy exploring new technologies and expanding my knowledge of the field. I am always eager to collaborate with others and take on new challenges in the world of embedded development.
 
-### 🔭 My work experince 
+### 🔭 My work Experince 
 - 2022 Embedded Developer team lead at Bibox Labs.
 - 2021 Joined Bibox labs as an Embedded Developer.
 - 2021 Developed AMUNET an IDPS system which can be connected to any router with ease.
@@ -10,7 +10,7 @@ I'm an embedded developer who loves to use the "I" pronoun - I mean, who doesn't
 - 2018 Developed a smart vehicle key less entry system with face detection.
 - 2017 Started pursuing B.Tech in Electronics and Communication engineering.
 
-### 🌱 My skills 
+### 🌱 My Skills 
 - Firmware architecture design, including proper planning for maintainability and scalability.
 - Firmware documentation, ensuring clear and comprehensive documentation to aid development and troubleshooting.
 - Firmware testing, including Test-Driven Development (TDD) methodology.
@@ -59,7 +59,7 @@ I'm an embedded developer who loves to use the "I" pronoun - I mean, who doesn't
 
 ### 📫 How to reach me
 
-- [Linkdein](https://www.linkedin.com/in/nikhil-robinson/) dm is always open.
+- [Linkedin](https://www.linkedin.com/in/nikhil-robinson/) dm is always open.
 - [Techprogeny](https://techprogeny.com)
 
 
