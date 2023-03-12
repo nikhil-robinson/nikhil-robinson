@@ -59,7 +59,7 @@ My name is Nikhil Robinson, and I'm an embedded developer with a passion for pro
 
 ### 📫 How to reach me
 
-- [Linkedin](https://www.linkedin.com/in/nikhil-robinson/) dm is always open.
+- [Linkedin](https://www.linkedin.com/in/nikhil-robinson/) DM is always open.
 - [Techprogeny](https://techprogeny.com)
 
 
