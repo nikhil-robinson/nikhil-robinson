@@ -69,12 +69,7 @@ My name is Nikhil Robinson, and I'm an embedded developer with a passion for pro
 <a href="https://linkedin.com/in/nikhil-robinson" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="nikhil-robinson" height="30" width="40" /></a>
 <a href="https://instagram.com/_nikhil_robinson_" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="nikhil-robinson" height="30" width="40" /></a>
 
-
-### Blogs posts
-<!-- BLOG-POST-LIST:START -->
-<!-- BLOG-POST-LIST:END -->
-
-
+  
 <!--
 **nikhil-robinson/nikhil-robinson** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
