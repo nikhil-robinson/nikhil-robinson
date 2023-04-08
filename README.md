@@ -65,7 +65,7 @@ My name is Nikhil Robinson, and I'm an embedded developer with a passion for pro
 
 🔗 &nbsp;**Connect with me**
 <p align="left">
-<a href="https://techprogeny.com" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/blogger.svg" alt="nikhil-robinson" height="30" width="40" /></a>
+<a href="https://techprogeny.com" target="blank"><img align="center" src="https://github.com/nikhil-robinson/nikhil-robinson/blob/main/images/src/techprogeny.svg" alt="nikhil-robinson" height="30" width="40" /></a>
 <a href="https://linkedin.com/in/nikhil-robinson" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="nikhil-robinson" height="30" width="40" /></a>
 <a href="https://instagram.com/_nikhil_robinson_" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="nikhil-robinson" height="30" width="40" /></a>
 
