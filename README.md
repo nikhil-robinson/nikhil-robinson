@@ -4,6 +4,7 @@ My name is Nikhil Robinson, and I'm an embedded developer with a passion for pro
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=nikhil-robinson&label=Profile%20views&color=0e75b6&style=flat" alt="nikhil-robinson" /> </p>
 
 ### 🔭 My work Experince 
+- 2024 Embedded Lead at Yudu Robotics.
 - 2022 Embedded Developer team lead at Bibox Labs.
 - 2021 Joined Bibox labs as an Embedded Developer.
 - 2021 Developed AMUNET an IDPS system which can be connected to any router with ease.
