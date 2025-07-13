@@ -33,10 +33,11 @@ I write firmware for microcontrollers, drivers for weird peripherals, and protoc
 
 ### 🧪 Currently Working On…
 
-- An autonomous system that *shouldn't be walking on its own... but does.*  
-- A voice-triggered operation that *only reacts when it really, really should.*  
-- A flying object that *refuses to crash despite having no autopilot.*  
-- A zero-wire file transport method that *shouldn't be this fast.*  
+- An entity capable of disrupting the entire cyberspace (I am trying hard not to).
+- An autonomous system that *shouldn't be walking on its own... but does.*
+- Literally a box which is smarter than me.
+- An UFO... yes an UFO!!!*
+- A zero-wire file transport method that *shouldn't be this fast.*
 
 There are NDAs. There are blinking lights. There is a small chance the lab explodes.  
 So yeah, it's going well.
@@ -72,6 +73,20 @@ So yeah, it's going well.
 
 ---
 
+### 👔 Hire Me (Before Someone Else Does)
+
+If you're building something smart, connected, fast, or dangerously close to brilliant —  
+and you need firmware that doesn’t flake out under pressure —  
+**you know where to find me.**
+
+[![Hire on Fiverr](https://img.shields.io/badge/Fiverr-hire%20me-1DBF73?style=for-the-badge&logo=fiverr&logoColor=white)](https://www.fiverr.com/sellers/nikhilrobinson/)  
+[![Visit Website](https://img.shields.io/badge/techprogeny.com-my%20work-black?style=for-the-badge&logo=vercel)](https://www.techprogeny.com/)  
+[![Connect on LinkedIn](https://img.shields.io/badge/LinkedIn-connect-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/nikhil-robinson/)
+
+> ⚠️ **Warning:** I build systems that keep working even after marketing says it's “done.”
+---
+
+
 ### 🧰 Languages, Tools & Frameworks
 
 <p align="left">
@@ -79,7 +94,6 @@ So yeah, it's going well.
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" width="40" />
   <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" width="40" />
   <img src="https://www.vectorlogo.zone/logos/python/python-icon.svg" width="40" />
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/rust/rust-plain.svg" width="40" />
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" width="40" />
   <img src="https://www.vectorlogo.zone/logos/opencv/opencv-icon.svg" width="40" />
   <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" width="40" />
