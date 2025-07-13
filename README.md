@@ -15,7 +15,7 @@ I write firmware for microcontrollers, drivers for weird peripherals, and protoc
 ![](http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=nikhil-robinson&theme=nord_bright)  
 ![](http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=nikhil-robinson&theme=nord_bright)  
 ![](http://github-profile-summary-cards.vercel.app/api/cards/stats?username=nikhil-robinson&theme=nord_bright)  
-![](http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=nikhil-robinson&theme=nord_bright&utcOffset=5)
+![](http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=nikhil-robinson&theme=nord_bright&utcOffset=5.30)
 
 ---
 
