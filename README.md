@@ -11,13 +11,16 @@ I write firmware for microcontrollers, drivers for weird peripherals, and protoc
 
 ### 📊 GitHub Stats
 
-![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=nikhil-robinson&theme=nord_bright)
+![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=nikhil-robinson&theme=dark)
 <!--
 ![](http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=nikhil-robinson&theme=nord_bright)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=nikhil-robinson&theme=nord_bright)
--->
 ![](http://github-profile-summary-cards.vercel.app/api/cards/stats?username=nikhil-robinson&theme=nord_bright)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=nikhil-robinson&theme=nord_bright&utcOffset=5.30)
+-->
+![](http://github-profile-summary-cards.vercel.app/api/cards/stats?username=nikhil-robinson&theme=dark)
+![](http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=nikhil-robinson&theme=dark)
+
 
 ---
 
