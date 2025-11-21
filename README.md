@@ -14,8 +14,8 @@
 [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/nilkhil_robinson)
 
 # 📊 GitHub Stats:
-![](https://nirzak-streak-stats.vercel.app/?user=nikhil-robinson&theme=dark&hide_border=false)
-![](https://github-readme-stats.vercel.app/api?username=nikhil-robinson&theme=dark&hide_border=false&include_all_commits=true&count_private=true)<br/>
+![](https://nirzak-streak-stats.vercel.app/?user=nikhil-robinson&theme=dark&hide_border=true&count_private=true)
+![](https://github-readme-stats.vercel.app/api?username=nikhil-robinson&theme=dark&hide_border=true&include_all_commits=true&count_private=true)<br/>
 <!--
 ![](https://github-readme-stats.vercel.app/api/top-langs/?username=nikhil-robinson&theme=dark&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
 ![](http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=nikhil-robinson&theme=dark)
