@@ -8,7 +8,7 @@
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/nikhil-robinson)
 [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:nikhil@techprogeny.com)
 [![Hire on Fiverr](https://img.shields.io/badge/Fiverr-%23FF0000.svg?logo=Fiverr&logoColor=white)](https://www.fiverr.com/sellers/nikhilrobinson/)
-[![Visit Website](https://img.shields.io/badge/Techprogeny-%23000000.svg?logo=google-chrome&logoColor=white)](https://www.techprogeny.com/)
+[![Visit Website](https://img.shields.io/badge/Techprogeny-%2303045E.svg?logo=google-chrome&logoColor=white)](https://www.techprogeny.com/)
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?logo=YouTube&logoColor=white)](https://youtube.com/@techprogeny) 
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/techprogeny)
 [![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/nilkhil_robinson)
