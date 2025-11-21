@@ -1,5 +1,9 @@
 # 💫 About Me:
-🧠 Architect robust, scalable firmware for production<br>🧪 Build testable systems using TDD & CI/CD pipelines<br>📶 Engineer low-level drivers, protocols, and OTA pipelines<br>🧰 Hack together sensors, AI models, servers, apps — full-stack embedded style
+🧠 Architect robust, scalable firmware for production<br>
+🧭 Craft sensor-fusion pipelines and intelligent robotics navigation systems<br>
+🧪 Build testable systems using TDD & CI/CD pipelines<br>
+📶 Engineer low-level drivers, protocols, and OTA pipelines<br>
+🧰 Hack together sensors, AI models, servers, apps.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/nikhil-robinson)
 [![email](https://img.shields.io/badge/Email-D14836?logo=gmail&logoColor=white)](mailto:nikhil@techprogeny.com)
@@ -93,7 +97,7 @@
 - An autonomous system that *shouldn't be walking on its own... but does.*
 - Literally a box which is smarter than me.
 - An UFO... yes an UFO!!!*
-- A zero-wire file transport method that *shouldn't be this fast.*http://github-profile-summary-cards.vercel.app/
+- A zero-wire file transport method that *shouldn't be this fast.* http://github-profile-summary-cards.vercel.app/
 
 There are NDAs. There are blinking lights. There is a small chance the lab explodes.  
 So yeah, it's going well.
@@ -101,8 +105,7 @@ So yeah, it's going well.
 
 # 👔 Hire Me (Before Someone Else Does)
 
-If you're building something smart, connected, fast, or dangerously close to brilliant —  
-and you need firmware that doesn’t flake out under pressure —  
+If you're building something smart, connected, fast, or dangerously close to brilliant and you need firmware that doesn’t flake out under pressure 
 **you know where to find me.**
 
 > ⚠️ **Warning:** I build systems that keep working even after marketing says it's “done.”
