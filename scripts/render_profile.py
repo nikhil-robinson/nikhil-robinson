@@ -66,24 +66,21 @@ BLOCKS = [
 
 # A dmesg-style stream that scrolls forever. (message, tag) with tag in {"OK", "WARN", ""}.
 LOG = [
-    ("bootrom: signature verified", "OK"),
-    ("ddr: training passed, first try", "OK"),
-    ("i2c-1: 0x68 ACK. writing this down.", ""),
-    ("uart: 115200 8N1, the one true baud", ""),
-    ("pinmux: schematic says 13", ""),
-    ("pinmux: scope says 14. scope wins.", "WARN"),
-    ("watchdog: fed. still alive.", "OK"),
-    ("heisenbug: gone after adding printf", "WARN"),
-    ("heisenbug: printf stays. forever.", ""),
-    ("errata rev F outranks the datasheet", ""),
-    ("bisect: 7 steps. culprit: me, 2023", ""),
-    ("thermal: 61°C, within spec", "OK"),
-    ("ota: slot B healthy, A on standby", "OK"),
-    ("analyzer: 3 of 4 probes alive", "WARN"),
-    ("pm: sleep current in µA range", "OK"),
-    ("dmesg: 0 errors. suspicious.", "WARN"),
-    ("kernel: hello from userspace", ""),
-    ("ready. ship it.", "OK"),
+    ("boot: engineer online, 5+ yrs uptime", "OK"),
+    ("scope: bring-up to cloud, end to end", ""),
+    ("board: new silicon arrived. no docs.", "WARN"),
+    ("uart: first words from new silicon", "OK"),
+    ("bsp: kernel up on a fresh board", "OK"),
+    ("npu: model squeezed onto the chip", ""),
+    ("npu: inference at the edge, no cloud", "OK"),
+    ("debug: it was the hardware. again.", "WARN"),
+    ("pm: battery life now in months", "OK"),
+    ("ota: fleet updated. nobody noticed.", "OK"),
+    ("ship: product in customers' hands", "OK"),
+    ("now: drone firmware, no GPS needed", ""),
+    ("now: AI on chips with KBs of RAM", ""),
+    ("log: notes shared at techprogeny", ""),
+    ("irq: your hardware project. let's talk.", ""),
     ("reboot: see you at 0.000", ""),
 ]
 
@@ -182,20 +179,29 @@ def stat_cell(x, y, label, value, color, begin, label_size, num_size):
             + odometer(x, y + label_size * 0.6, value, color, begin, num_size))
 
 
-def waveform(x, y, w, h, weekly, begin, label_size):
+def waveform(x, y, w, h, weekly, begin, label_size, beat=5):
+    """52-week activity trace that redraws every `beat` seconds like a heart monitor."""
     box = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#0c1218" stroke="#1a2430"/>'
     if not weekly:
         return box + (f'<text x="{x + w / 2}" y="{y + h / 2 + 4}" class="x-lbl" font-size="{label_size}" '
                       f'text-anchor="middle">AWAITING FIRST SYNC</text>')
     peak = max(weekly) or 1
     step = w / max(len(weekly) - 1, 1)
-    pts = " ".join(f"{x + i * step:.1f},{y + h - 4 - (v / peak) * (h - 10):.1f}" for i, v in enumerate(weekly))
-    return (box
-            + f'<polygon points="{x},{y + h} {pts} {x + w},{y + h}" fill="url(#wavefill)" opacity="0">'
-              f'<animate attributeName="opacity" from="0" to="1" dur="1s" begin="{begin + 1.2}s" fill="freeze"/></polygon>'
-            + f'<polyline points="{pts}" fill="none" stroke="{CYAN}" stroke-width="2.5" stroke-linejoin="round" '
+    pts = [(x + i * step, y + h - 4 - (v / peak) * (h - 10)) for i, v in enumerate(weekly)]
+    d = "M" + " L".join(f"{px:.1f},{py:.1f}" for px, py in pts)
+    area = f"{d} L{x + w},{y + h} L{x},{y + h} Z"
+    # one beat: sweep in (0-45%), hold (45-85%), wipe out (85-100%)
+    kt, anim = "0;.45;.85;1", f'dur="{beat}s" begin="{begin}s" repeatCount="indefinite"'
+    grid = "".join(f'<line x1="{x}" y1="{y + h * f:.1f}" x2="{x + w}" y2="{y + h * f:.1f}" stroke="#16202b"/>' for f in (.25, .5, .75))
+    return (box + grid
+            + f'<path d="{area}" fill="url(#wavefill)" opacity="0">'
+              f'<animate attributeName="opacity" values="0;.9;.9;0" keyTimes="{kt}" {anim}/></path>'
+            + f'<path id="wave" d="{d}" fill="none" stroke="{CYAN}" stroke-width="2.5" stroke-linejoin="round" '
               f'pathLength="1" stroke-dasharray="1" stroke-dashoffset="1">'
-              f'<animate attributeName="stroke-dashoffset" from="1" to="0" dur="2s" begin="{begin}s" fill="freeze"/></polyline>')
+              f'<animate attributeName="stroke-dashoffset" values="1;0;0;-1" keyTimes="{kt}" {anim}/></path>'
+            + f'<g opacity="0"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.45;.5;1" {anim}/>'
+              f'<circle r="9" fill="{CYAN}" opacity=".25"/><circle r="4" fill="{CYAN}"/>'
+              f'<animateMotion keyPoints="0;1;1" keyTimes="0;.45;1" calcMode="linear" {anim}><mpath href="#wave"/></animateMotion></g>')
 
 
 def language_bar(x, y, w, languages, begin, legend_size):
