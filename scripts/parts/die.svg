@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" width="960" height="580">
-  <!-- Desktop die floorplan. {{tokens}} are filled from BLOCKS / VENDORS / IFACES in render_profile.py -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" width="960" height="680">
+  <!-- Desktop die floorplan. {{tokens}} are filled from the content tables in render_profile.py -->
   <defs>
     <pattern id="grid" width="12" height="12" patternUnits="userSpaceOnUse">
       <path d="M12 0H0V12" fill="none" stroke="#16202b" stroke-width="1"/>
@@ -12,14 +12,11 @@
   </defs>
   <style>
     .t  { fill: #e6edf3; font-size: 17px; font-weight: 700; letter-spacing: 1px; }
-    .s  { fill: #a9b6c4; font-size: 13.5px; }
-    .k  { fill: #3ee6c1; font-size: 11px; letter-spacing: 2px; }
-    .pl { fill: #8b9bb0; font-size: 10px; letter-spacing: 1px; font-weight: 700; }
+    .s  { fill: #b4c0cc; font-size: 13.5px; }
+    .k  { font-size: 11px; letter-spacing: 2px; font-weight: 700; }
+    .pl { fill: #a9b6c4; font-size: 10px; font-weight: 700; }
     .blk { fill: #111a24; stroke-width: 1.5; opacity: 0; animation: on .5s ease-out forwards; }
     .lbl { opacity: 0; animation: on .5s ease-out forwards; }
-    .c1 { stroke: #3ee6c1; } .c2 { stroke: #ffb547; } .c3 { stroke: #ff5d8f; } .c4 { stroke: #7aa2ff; }
-    .d1 { animation-delay: .3s } .d2 { animation-delay: .6s } .d3 { animation-delay: .9s } .d4 { animation-delay: 1.2s }
-    .d5 { animation-delay: 1.5s } .d6 { animation-delay: 1.8s } .d7 { animation-delay: 2.1s } .d8 { animation-delay: 2.4s }
     .core { fill: #0d151e; stroke: #3ee6c1; stroke-width: 1; animation: core 2.4s ease-in-out infinite; }
     .bus { fill: none; stroke: #1f3142; stroke-width: 6; stroke-linecap: round; }
     .flow { fill: none; stroke: #3ee6c1; stroke-width: 2; stroke-dasharray: 4 18; stroke-linecap: round; animation: flow 1.4s linear infinite; opacity: .7; }
@@ -31,38 +28,29 @@
     @keyframes core { 0%,100% { fill: #0d151e } 50% { fill: #154d44 } }
     @keyframes flow { to { stroke-dashoffset: -44 } }
     @keyframes pad { 0%,100% { fill: #1a2633 } 50% { fill: #2f5a52 } }
-    @keyframes scan { from { transform: translateY(-80px) } to { transform: translateY(580px) } }
+    @keyframes scan { from { transform: translateY(-80px) } to { transform: translateY(680px) } }
     @keyframes blink { 50% { opacity: .15 } }
   </style>
 
-  <rect width="960" height="580" rx="18" fill="#0a0e13"/>
-  <rect x="34" y="34" width="892" height="512" rx="6" fill="#0e141b" stroke="#24313f" stroke-width="2"/>
-  <rect x="70" y="70" width="820" height="440" fill="url(#grid)"/>
+  <rect width="960" height="680" rx="18" fill="#0a0e13"/>
+  <rect x="34" y="34" width="892" height="612" rx="6" fill="#0e141b" stroke="#24313f" stroke-width="2"/>
+  <rect x="70" y="70" width="820" height="540" fill="url(#grid)"/>
 
   {{TOP_PADS}}
   {{BOTTOM_PADS}}
   {{SIDE_PADS}}
 
-  <path class="bus" d="M90 290 H870 M370 90 V490 M590 90 V490"/>
-  <path class="flow" d="M90 290 H870"/>
-  <path class="flow flow2" d="M370 90 V490"/>
-  <path class="flow" d="M590 490 V90" style="animation-duration:1.8s"/>
-
-  <!-- CPU cluster -->
-  <rect class="blk c1 d1" x="90" y="90" width="270" height="190" rx="4"/>
-  <g class="lbl d1">
-    <text class="k" x="104" y="110">CPU CLUSTER</text>
-    <rect class="core" x="104" y="124" width="116" height="66" rx="3"/>
-    <rect class="core" x="230" y="124" width="116" height="66" rx="3" style="animation-delay:.6s"/>
-    <rect class="core" x="104" y="200" width="116" height="66" rx="3" style="animation-delay:1.2s"/>
-    <rect class="core" x="230" y="200" width="116" height="66" rx="3" style="animation-delay:1.8s"/>
-    {{CORES}}
-  </g>
+  <path class="bus" d="M84 256 H876 M84 428 H876 M282 84 V600 M480 84 V600 M678 84 V600"/>
+  <path class="flow" d="M84 256 H876"/>
+  <path class="flow" d="M876 428 H84" style="animation-duration:1.7s"/>
+  <path class="flow flow2" d="M282 84 V600"/>
+  <path class="flow" d="M480 600 V84" style="animation-duration:1.9s"/>
+  <path class="flow flow2" d="M678 84 V600" style="animation-duration:2.4s"/>
 
   {{BLOCKS}}
 
   <rect class="scan" x="70" y="0" width="820" height="80" fill="url(#scan)"/>
-  <circle class="led" cx="62" cy="563" r="4"/>
-  <text class="pl" x="74" y="566">PWR</text>
-  <text class="pl" x="898" y="566" text-anchor="end">NR-26 · REV C · NIKHIL ROBINSON</text>
+  <circle class="led" cx="62" cy="663" r="4"/>
+  <text class="pl" x="74" y="666">PWR</text>
+  <text class="pl" x="898" y="666" text-anchor="end">NR-26 · REV C · NIKHIL ROBINSON</text>
 </svg>

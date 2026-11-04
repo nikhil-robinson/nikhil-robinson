@@ -28,7 +28,6 @@ DIE = ROOT / "scripts" / "parts" / "die.svg"
 
 CYAN, AMBER, PINK, BLUE, GREY = "#3ee6c1", "#ffb547", "#ff5d8f", "#7aa2ff", "#56677a"
 LANG_COLORS = [CYAN, AMBER, PINK, BLUE, "#b48cff", GREY]
-COLOR = {"c1": CYAN, "c2": AMBER, "c3": PINK, "c4": BLUE}
 
 # Docs, markup and build files that would skew the language mix.
 NOT_CODE = {"Roff", "HTML", "CSS", "Makefile", "CMake", "Batchfile", "PowerShell", "Dockerfile",
@@ -42,25 +41,32 @@ SUBTITLE = "BSP · EDGE AI · IOT · 5+ YEARS"
 ROLES = ["SILICON BRING-UP", "EMBEDDED LINUX BSPs", "REAL-TIME FIRMWARE",
          "NPU MODEL DEPLOYMENT", "WIRELESS + OTA", "POWER OPTIMIZATION"]
 
-VENDORS = ["ROCKCHIP", "KNERON", "MILK-V", "RENESAS", "TI", "MICROCHIP", "STM32", "NORDIC", "NXP i.MX", "ESP32"]
-IFACES = ["UART", "SPI", "I2C", "CAN", "USB", "I2S", "JTAG", "SWD", "ETH"]
+VENDORS = ["ROCKCHIP", "KNERON", "MILK-V", "NXP i.MX", "RENESAS", "TI",
+           "MICROCHIP", "STM32", "NORDIC", "ESP32", "CH32", "AVR"]
+IFACES = ["UART", "SPI", "I2C", "CAN", "USB", "I2S", "ETH", "JTAG", "SWD"]
 CORES = ["C", "C++", "RUST", "BASH"]
 
-# key: (kicker, title, short title for mobile, lines, color class, desktop rect (x, y, w, h), delay class)
-BLOCKS = {
-    "npu":   ("NPU / EDGE AI", "ON-DEVICE AI", "ON-DEVICE AI", ["RKNN · Kneron NPU", "TinyML on MCUs", "model deployment"], "c3", (380, 90, 200, 190), "d2"),
-    "sec":   ("SECURE ENCLAVE", "ROOT OF TRUST", "ROOT OF TRUST", ["Secure boot · OTA", "provisioning"], "c2", (600, 90, 270, 90), "d3"),
-    "boot":  ("BRING-UP", "FIRST SILICON", "FIRST SILICON", ["hardware debugging", "power optimization"], "c2", (600, 190, 270, 90), "d4"),
-    "linux": ("APPLICATION SUBSYSTEM", "EMBEDDED LINUX / BSP", "LINUX / BSP", ["Rockchip · NXP i.MX", "Milk-V · RKMPP · RGA", "drivers · DT · LVGL"], "c4", (90, 300, 270, 190), "d5"),
-    "rt":    ("RT CORE", "REAL-TIME", "REAL-TIME", ["FreeRTOS · Zephyr", "nRF Connect · ESP-IDF"], "c1", (380, 300, 200, 90), "d6"),
-    "lab":   ("R&D", "EXPLORING", "EXPLORING", ["Autonomous drones", "GPS-denied navigation"], "c3", (380, 400, 200, 90), "d7"),
-    "rf":    ("RF FRONT-END", "CONNECTIVITY", "CONNECTIVITY", ["Wi-Fi · BLE · MQTT", "TCP/IP · LoRa · LTE"], "c4", (600, 300, 270, 190), "d8"),
-}
-MOBILE_ORDER = ["cpu", "npu", "linux", "rt", "sec", "boot", "rf", "lab"]
+# Die blocks in reading order: 4 columns x 3 rows on desktop, 2 columns x 6 rows on mobile.
+# (kicker, title, lines, colour). Lines stay <= 19 chars so they fit both layouts.
+# The "cpu" block draws CORES instead of lines.
+BLOCKS = [
+    ("CPU CLUSTER", None, None, CYAN),
+    ("NPU / EDGE AI", "ON-DEVICE AI", ["RKNN · Kneron NPU", "TinyML · OpenCV", "PyTorch · TF → NPU"], PINK),
+    ("APP SUBSYSTEM", "LINUX / BSP", ["Rockchip · i.MX", "Milk-V · RKMPP/RGA", "kernel drivers · DT"], BLUE),
+    ("BOOT ROM", "BOOT CHAIN", ["U-Boot · OTA · A/B", "Yocto · Buildroot", "provisioning"], AMBER),
+    ("SECURE ENCLAVE", "ROOT OF TRUST", ["Secure boot · AES", "Flash encryption", "CRC32 · MD5"], AMBER),
+    ("RT CORE", "REAL-TIME", ["FreeRTOS · Zephyr", "nRF Connect SDK", "ESP-IDF · FSP"], CYAN),
+    ("DISPLAY", "HMI / GUI", ["LVGL · Qt · Slint", "MCU + Linux GUIs", "touch + display"], PINK),
+    ("RF FRONT-END", "WIRELESS", ["Wi-Fi · BLE · LoRa", "LTE · NB-IoT · GSM", "NFC · RFID"], BLUE),
+    ("NETWORK STACK", "PROTOCOLS", ["MQTT · TCP · UDP", "HTTP/S · WebSocket", "custom APIs"], CYAN),
+    ("MOTION ENGINE", "ROBOTICS", ["ROS 2 · AHRS", "sensor fusion", "navigation"], PINK),
+    ("BRING-UP", "FIRST SILICON", ["hardware debugging", "power optimization", "JTAG · SWD"], AMBER),
+    ("R&D", "EXPLORING", ["autonomous drones", "GPS-denied nav", "Edge AI on MCUs"], BLUE),
+]
 
 BOOT = [
     ('<tspan class="x-dim">BootROM</tspan> secure boot <tspan class="x-ok">OK</tspan> · OTA slot <tspan class="x-ok">B</tspan>', 0),
-    ('<tspan class="x-dim">loader</tspan> · <tspan class="x-bl">Image</tspan> + <tspan class="x-bl">nr-26.dtb</tspan>', 0),
+    ('<tspan class="x-dim">U-Boot</tspan> · <tspan class="x-bl">Image</tspan> + <tspan class="x-bl">nr-26.dtb</tspan>', 0),
     ('<tspan class="x-ts">[0.000]</tspan> Linux · <tspan class="x-hi">Nikhil Robinson NR-26</tspan>', 6),
     ('<tspan class="x-ts">[0.104]</tspan> cpu: C · C++ · Rust · Bash <tspan class="x-ok">up</tspan>', 0),
     ('<tspan class="x-ts">[0.218]</tspan> uart spi i2c can <tspan class="x-ok">bound</tspan>', 0),
@@ -73,7 +79,8 @@ BOOT = [
 ]
 LOGIN_CHARS = len("nr-26 login: hire_me ")
 
-TOOLCHAINS = ["e² studio · FSP", "STM32CubeIDE", "MPLAB X", "Code Composer Studio", "nRF Connect SDK", "ESP-IDF"]
+TOOLCHAINS = ["e² studio · FSP", "STM32CubeIDE", "MPLAB X", "Code Composer Studio", "nRF Connect SDK", "ESP-IDF",
+              "PlatformIO", "GitHub Actions", "GitLab CI", "Bitbucket", "TDD + CI/CD", "Blender"]
 TICKER = "  ◆  ".join(TOOLCHAINS + ["SILICON BRING-UP TO CLOUD", "TECHPROGENY.COM"]) + "  ◆  "
 
 QUERY = """
@@ -304,66 +311,66 @@ def telemetry(px, py, pw, stats, s):
     ])
 
 
-def npu_bars(x, y):
-    return "".join(
-        f'<rect x="{x + i * 16}" y="{y}" width="10" height="24" fill="{PINK}" opacity=".55">'
-        f'<animate attributeName="height" values="{a};{b};{a}" dur="{dur}s" repeatCount="indefinite"/></rect>'
-        for i, (a, b, dur) in enumerate([(24, 8, 1.1), (10, 24, .9), (18, 4, 1.3), (6, 22, 1), (22, 12, 1.2)]))
-
-
-def radio_waves(cx, cy):
-    arcs = "".join(
-        f'<path d="M{cx - 6 - r * 0.4:.0f} {cy - r} a{r} {r} 0 0 0 0 {2 * r}" opacity=".3">'
-        f'<animate attributeName="opacity" values=".15;1;.15" dur="1.5s" begin="{j * .25}s" repeatCount="indefinite"/></path>'
-        f'<path d="M{cx + 6 + r * 0.4:.0f} {cy - r} a{r} {r} 0 0 1 0 {2 * r}" opacity=".3">'
-        f'<animate attributeName="opacity" values=".15;1;.15" dur="1.5s" begin="{j * .25}s" repeatCount="indefinite"/></path>'
-        for j, r in enumerate((10, 22, 34)))
-    return (f'<g fill="none" stroke="{BLUE}" stroke-width="2" stroke-linecap="round">{arcs}</g>'
-            f'<circle cx="{cx}" cy="{cy}" r="4" fill="{BLUE}"/>')
+def block_body(x, y, w, h, kicker, title, lines, color, k_cls, t_cls, l_cls, k_dy, t_dy, l_dy, lh):
+    """Kicker + title + lines, or the CPU core grid when title is None."""
+    head = f'<text class="{k_cls}" x="{x + 14}" y="{y + k_dy}" fill="{color}" style="fill:{color}">{escape(kicker)}</text>'
+    if title is None:
+        cw, gap = (w - 28 - 8) / 2, 8
+        chh = min(lh * 2.3, (h - k_dy - 12 - gap - 12) / 2)
+        cores = "".join(
+            f'<rect class="core m-core" x="{x + 14 + (i % 2) * (cw + gap):.0f}" y="{y + k_dy + 12 + (i // 2) * (chh + gap):.0f}" '
+            f'width="{cw:.0f}" height="{chh:.0f}" rx="3" style="animation-delay:{i * .6:.1f}s"/>'
+            f'<text class="{t_cls}" x="{x + 14 + (i % 2) * (cw + gap) + cw / 2:.0f}" y="{y + k_dy + 12 + (i // 2) * (chh + gap) + chh / 2 + lh * 0.3:.0f}" '
+            f'text-anchor="middle">{c}</text>'
+            for i, c in enumerate(CORES))
+        return head + cores
+    body = "".join(f'<text class="{l_cls}" x="{x + 14}" y="{y + l_dy + i * lh}">{escape(t)}</text>' for i, t in enumerate(lines))
+    return head + f'<text class="{t_cls}" x="{x + 14}" y="{y + t_dy}">{escape(title)}</text>' + body
 
 
 # --------------------------------------------------------------------------- desktop frame
 
 def die_markup():
     src = DIE.read_text()
+    n = len(VENDORS)
+    step = 780 / n
     top = "".join(
-        f'<rect class="pad" x="{90 + i * 78}" y="42" width="74" height="20" rx="2" style="animation-delay:{i * .15:.2f}s"/>'
-        f'<text class="pl" x="{127 + i * 78}" y="56" text-anchor="middle">{escape(v)}</text>'
+        f'<rect class="pad" x="{90 + i * step:.1f}" y="42" width="{step - 4:.1f}" height="20" rx="2" style="animation-delay:{i * .15:.2f}s"/>'
+        f'<text class="pl" x="{90 + i * step + (step - 4) / 2:.1f}" y="56" text-anchor="middle">{escape(v)}</text>'
         for i, v in enumerate(VENDORS))
+    step = 780 / len(IFACES)
     bottom = "".join(
-        f'<rect class="pad" x="{92 + i * 86}" y="518" width="80" height="20" rx="2" style="animation-delay:{i * .2 + .1:.2f}s"/>'
-        f'<text class="pl" x="{132 + i * 86}" y="532" text-anchor="middle">{v}</text>'
+        f'<rect class="pad" x="{90 + i * step:.1f}" y="618" width="{step - 6:.1f}" height="20" rx="2" style="animation-delay:{i * .2 + .1:.2f}s"/>'
+        f'<text class="pl" x="{90 + i * step + (step - 6) / 2:.1f}" y="632" text-anchor="middle">{v}</text>'
         for i, v in enumerate(IFACES))
     side = "".join(
-        f'<rect class="pad" x="{x}" y="{100 + i * 58}" width="16" height="38" rx="2" style="animation-delay:{i * .3 + off:.2f}s"/>'
-        for i in range(7) for x, off in ((44, 0), (900, .15)))
-    cores = "".join(
-        f'<text class="t" x="{162 + (i % 2) * 126}" y="{163 + (i // 2) * 76}" text-anchor="middle">{c}</text>'
-        for i, c in enumerate(CORES))
+        f'<rect class="pad" x="{x}" y="{96 + i * 64}" width="16" height="42" rx="2" style="animation-delay:{i * .3 + off:.2f}s"/>'
+        for i in range(8) for x, off in ((44, 0), (900, .15)))
     blocks = []
-    for key, (kicker, title, _, lines, cc, (x, y, w, h), d) in BLOCKS.items():
-        ty, l0, lh = (y + 50, y + 76, 21) if h > 100 else (y + 42, y + 62, 17)
-        body = "".join(f'<text class="s" x="{x + 14}" y="{l0 + i * lh}">{escape(t)}</text>' for i, t in enumerate(lines))
-        extra = npu_bars(x + 14, y + 150) if key == "npu" else radio_waves(x + 210, y + 140) if key == "rf" else ""
+    bw, bh, gap = 186, 160, 12
+    for i, (kicker, title, lines, color) in enumerate(BLOCKS):
+        r, c = divmod(i, 4)
+        x, y = 90 + c * (bw + gap), 90 + r * (bh + gap)
+        delay = f"animation-delay:{0.2 + i * 0.18:.2f}s"
         blocks.append(
-            f'<rect class="blk {cc} {d}" x="{x}" y="{y}" width="{w}" height="{h}" rx="4"/>'
-            f'<g class="lbl {d}"><text class="k" x="{x + 14}" y="{y + 22}" style="fill:{COLOR[cc]}">{escape(kicker)}</text>'
-            f'<text class="t" x="{x + 14}" y="{ty}">{escape(title)}</text>{body}{extra}</g>')
-    for token, val in (("TOP_PADS", top), ("BOTTOM_PADS", bottom), ("SIDE_PADS", side),
-                       ("CORES", cores), ("BLOCKS", "".join(blocks))):
+            f'<rect class="blk" x="{x}" y="{y}" width="{bw}" height="{bh}" rx="4" stroke="{color}" style="{delay}"/>'
+            f'<g class="lbl" style="{delay}">'
+            + block_body(x, y, bw, bh, kicker, title, lines, color, "k", "t", "s", 24, 52, 80, 22)
+            + "</g>")
+    for token, val in (("TOP_PADS", top), ("BOTTOM_PADS", bottom), ("SIDE_PADS", side), ("BLOCKS", "".join(blocks))):
         src = src.replace("{{" + token + "}}", val)
     return re.search(r"<svg[^>]*>(.*)</svg>", src, re.S).group(1)
 
 
 def render_desktop(stats):
-    W, H = 1000, 1210
+    W, H = 1000, 1306
     synced = stats.get("synced", "pending")
     status = f"ONLINE · SYNC {synced}"
-    py = 772
+    py = 866
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img"
   aria-label="Nikhil Robinson, Embedded Linux and firmware engineer. Animated profile frame with a chip floorplan of skills, a boot log and live GitHub telemetry.">
   <title>Nikhil Robinson · NR-26</title>
-  {defs(W, H, '<clipPath id="tick"><rect x="40" y="1150" width="920" height="44"/></clipPath>')}
+  {defs(W, H, '<clipPath id="tick"><rect x="40" y="1246" width="920" height="44"/></clipPath>')}
   <g clip-path="url(#frame)">
     <rect width="{W}" height="{H}" fill="#070a0e"/>
     <text x="40" y="38" class="x-bar" font-size="13">NR-26 // ENGINEER-ON-CHIP</text>
@@ -379,8 +386,8 @@ def render_desktop(stats):
     {boot_log(62, py + 80, 2.6, 14, 24)}
     {panel(548, py, 412, 362, "TELEMETRY · LIVE FROM GITHUB", 12, dot=True)}
     {telemetry(548, py, 412, stats, dict(label=11, num=30, legend=12, row=58, wave_h=56))}
-    <line x1="40" y1="1150" x2="960" y2="1150" stroke="#1a2430"/>
-    {ticker(40, 1180, 13, "tick")}
+    <line x1="40" y1="1246" x2="960" y2="1246" stroke="#1a2430"/>
+    {ticker(40, 1276, 13, "tick")}
   </g>
   <rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="21" fill="none" stroke="#24313f" stroke-width="2"/>
 </svg>
@@ -392,33 +399,23 @@ def render_desktop(stats):
 def mobile_chip(y0):
     """Portrait chip: vendor pads, 2-column block grid, interface pads. Returns (svg, bottom_y)."""
     out, x0, w = [], 20, 560
-    pw, gap = 100, 6
+    cols, gap = 4, 6
+    pw = (w - 44 - (cols - 1) * gap) / cols
     for i, v in enumerate(VENDORS):
-        r, c = divmod(i, 5)
+        r, c = divmod(i, cols)
         px, py = x0 + 22 + c * (pw + gap), y0 + 62 + r * 44
-        out.append(f'<rect class="m-pad" x="{px}" y="{py}" width="{pw}" height="36" rx="4" style="animation-delay:{i * .15:.2f}s"/>'
-                   f'<text x="{px + pw / 2}" y="{py + 24}" class="m-pl" text-anchor="middle">{escape(v)}</text>')
-    gy, bw, bh, bgap = y0 + 162, 254, 168, 12
-    for idx, key in enumerate(MOBILE_ORDER):
+        out.append(f'<rect class="m-pad" x="{px:.1f}" y="{py}" width="{pw:.1f}" height="36" rx="4" style="animation-delay:{i * .15:.2f}s"/>'
+                   f'<text x="{px + pw / 2:.1f}" y="{py + 24}" class="m-pl" text-anchor="middle">{escape(v)}</text>')
+    gy = y0 + 62 + -(-len(VENDORS) // cols) * 44 + 18
+    bw, bh, bgap = 254, 160, 12
+    for idx, (kicker, title, lines, color) in enumerate(BLOCKS):
         r, c = divmod(idx, 2)
         bx, by = x0 + 22 + c * (bw + bgap), gy + r * (bh + bgap)
-        if key == "cpu":
-            cc, kicker = "c1", "CPU CLUSTER"
-            inner = "".join(
-                f'<rect x="{bx + 14 + (i % 2) * 116}" y="{by + 40 + (i // 2) * 62}" width="108" height="54" rx="4" '
-                f'class="m-core" style="animation-delay:{i * .6}s"/>'
-                f'<text x="{bx + 68 + (i % 2) * 116}" y="{by + 75 + (i // 2) * 62}" text-anchor="middle" class="m-title">{c_}</text>'
-                for i, c_ in enumerate(CORES))
-        else:
-            kicker, _, short, lines, cc, _, _ = BLOCKS[key]
-            inner = (f'<text x="{bx + 16}" y="{by + 66}" class="m-title">{escape(short)}</text>'
-                     + "".join(f'<text x="{bx + 16}" y="{by + 98 + i * 26}" class="m-line">{escape(t)}</text>'
-                               for i, t in enumerate(lines)))
-        col = COLOR[cc]
-        out.append(f'<g opacity="0"><animate attributeName="opacity" from="0" to="1" dur=".5s" begin="{0.3 + idx * 0.25:.2f}s" fill="freeze"/>'
-                   f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="6" fill="#111a24" stroke="{col}" stroke-width="2"/>'
-                   f'<text x="{bx + 16}" y="{by + 28}" class="m-kick" fill="{col}">{escape(kicker)}</text>{inner}</g>')
-    iy = gy + 4 * (bh + bgap) + 4
+        out.append(f'<g opacity="0"><animate attributeName="opacity" from="0" to="1" dur=".5s" begin="{0.3 + idx * 0.18:.2f}s" fill="freeze"/>'
+                   f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="6" fill="#111a24" stroke="{color}" stroke-width="2"/>'
+                   + block_body(bx + 2, by, bw - 4, bh, kicker, title, lines, color, "m-kick", "m-title", "m-line", 28, 62, 94, 25)
+                   + "</g>")
+    iy = gy + -(-len(BLOCKS) // 2) * (bh + bgap) + 4
     iw = (w - 44 - 8 * 6) / 9
     for i, v in enumerate(IFACES):
         px = x0 + 22 + i * (iw + 6)
