@@ -64,25 +64,6 @@ BLOCKS = [
     ("R&D", "EXPLORING", ["autonomous drones", "GPS-denied nav", "Edge AI on MCUs"], BLUE),
 ]
 
-# A dmesg-style stream that scrolls forever. (message, tag) with tag in {"OK", "WARN", ""}.
-LOG = [
-    ("boot: engineer online, 5+ yrs uptime", "OK"),
-    ("scope: bring-up to cloud, end to end", ""),
-    ("board: new silicon arrived. no docs.", "WARN"),
-    ("uart: first words from new silicon", "OK"),
-    ("bsp: kernel up on a fresh board", "OK"),
-    ("npu: model squeezed onto the chip", ""),
-    ("npu: inference at the edge, no cloud", "OK"),
-    ("debug: it was the hardware. again.", "WARN"),
-    ("pm: battery life now in months", "OK"),
-    ("ota: fleet updated. nobody noticed.", "OK"),
-    ("ship: product in customers' hands", "OK"),
-    ("now: drone firmware, no GPS needed", ""),
-    ("now: AI on chips with KBs of RAM", ""),
-    ("log: notes shared at techprogeny", ""),
-    ("irq: your hardware project. let's talk.", ""),
-    ("reboot: see you at 0.000", ""),
-]
 
 TOOLCHAINS = ["e² studio", "STM32CubeIDE", "MPLAB X", "Code Composer Studio", "PlatformIO", "GitHub Actions", "GitLab CI", "Bitbucket", "TDD + CI/CD", "Blender"]
 TICKER = "  ◆  ".join(TOOLCHAINS + ["SILICON BRING-UP TO CLOUD", "TECHPROGENY.COM"]) + "  ◆  "
@@ -90,6 +71,7 @@ TICKER = "  ◆  ".join(TOOLCHAINS + ["SILICON BRING-UP TO CLOUD", "TECHPROGENY.
 QUERY = """
 query($login: String!) {
   user(login: $login) {
+    id
     followers { totalCount }
     repositories(ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC, first: 100) {
       totalCount
@@ -111,19 +93,60 @@ query($login: String!) {
 """
 
 
+# Recent public work: latest commits by the user in their most recently pushed
+# public repos, plus releases and newly created repos.
+ACTIVITY_QUERY = """
+query($login: String!, $uid: ID!) {
+  user(login: $login) {
+    repositories(ownerAffiliations: OWNER, privacy: PUBLIC, first: 8,
+                 orderBy: {field: PUSHED_AT, direction: DESC}) {
+      nodes {
+        name
+        createdAt
+        releases(first: 2, orderBy: {field: CREATED_AT, direction: DESC}) { nodes { tagName publishedAt } }
+        defaultBranchRef { target { ... on Commit {
+          history(first: 5, author: {id: $uid}) { nodes { messageHeadline committedDate } }
+        } } }
+      }
+    }
+  }
+}
+"""
+ACTIVITY_MAX = 24
+
+
 # --------------------------------------------------------------------------- data
 
-def fetch_stats(token):
+def graphql(token, query, variables):
     req = urllib.request.Request(
         "https://api.github.com/graphql",
-        data=json.dumps({"query": QUERY, "variables": {"login": USER}}).encode(),
+        data=json.dumps({"query": query, "variables": variables}).encode(),
         headers={"Authorization": f"bearer {token}", "User-Agent": "profile-renderer"},
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         payload = json.load(resp)
     if payload.get("errors"):
         raise RuntimeError(payload["errors"])
-    u = payload["data"]["user"]
+    return payload["data"]
+
+
+def fetch_activity(token, uid):
+    """Newest-first list of {date, repo, kind, text} from public repos only."""
+    events = []
+    for repo in graphql(token, ACTIVITY_QUERY, {"login": USER, "uid": uid})["user"]["repositories"]["nodes"]:
+        name = repo["name"]
+        events.append({"date": repo["createdAt"], "repo": name, "kind": "new", "text": "repository created"})
+        for rel in repo["releases"]["nodes"]:
+            if rel["publishedAt"]:
+                events.append({"date": rel["publishedAt"], "repo": name, "kind": "release", "text": f"released {rel['tagName']}"})
+        target = (repo.get("defaultBranchRef") or {}).get("target") or {}
+        for c in (target.get("history") or {}).get("nodes", []):
+            events.append({"date": c["committedDate"], "repo": name, "kind": "commit", "text": c["messageHeadline"]})
+    events.sort(key=lambda e: e["date"], reverse=True)
+    return events[:ACTIVITY_MAX]
+
+def fetch_stats(token, cached):
+    u = graphql(token, QUERY, {"login": USER})["user"]
     repos = u["repositories"]
     sizes = {}
     for node in repos["nodes"]:
@@ -131,7 +154,13 @@ def fetch_stats(token):
             name = edge["node"]["name"]
             sizes[name] = sizes.get(name, 0) + edge["size"]
     cal = u["contributionsCollection"]["contributionCalendar"]
+    try:
+        activity = fetch_activity(token, u["id"])
+    except Exception as exc:  # activity is optional; keep the last good list
+        print(f"warning: activity fetch failed: {exc}", file=sys.stderr)
+        activity = cached.get("activity", [])
     return {
+        "activity": activity,
         "stars": sum(n["stargazerCount"] for n in repos["nodes"]),
         "repos": repos["totalCount"],
         "followers": u["followers"]["totalCount"],
@@ -144,16 +173,15 @@ def fetch_stats(token):
 
 def load_stats():
     token = os.environ.get("GITHUB_TOKEN")
+    cached = json.loads(CACHE.read_text()) if CACHE.exists() else {}
     if token:
         try:
-            stats = fetch_stats(token)
+            stats = fetch_stats(token, cached)
             CACHE.write_text(json.dumps(stats, indent=2) + "\n")
             return stats
         except Exception as exc:  # keep rendering from cache
             print(f"warning: live fetch failed, using cache: {exc}", file=sys.stderr)
-    if CACHE.exists():
-        return json.loads(CACHE.read_text())
-    return {}
+    return cached
 
 
 # --------------------------------------------------------------------------- shared widgets
@@ -234,20 +262,36 @@ def language_bar(x, y, w, languages, begin, legend_size):
     return "".join(out)
 
 
-def boot_stream(px, py, pw, ph, size, lh, clip_id):
-    """LOG as an endless upward-scrolling stream inside a panel body."""
-    top, n = py + 48, len(LOG)
-    lines, t = [], 0.0
-    for i in range(2 * n):  # two copies so the loop is seamless
-        msg, tag = LOG[i % n]
-        t = (i % n) * 0.4137 + (i % n) ** 1.3 * 0.05
-        tag_svg = {"OK": ' <tspan class="x-ok">[ OK ]</tspan>', "WARN": ' <tspan class="x-wr">[WARN]</tspan>'}.get(tag, "")
-        lines.append(f'<text x="{px + 22}" y="{top + 14 + size + i * lh:.1f}" class="x-boot" font-size="{size}">'
-                     f'<tspan class="x-ts">[{t:7.3f}]</tspan> {escape(msg)}{tag_svg}</text>')
+def activity_line(e, max_chars):
+    """'[Nov 04] repo  message' with the message trimmed to fit the panel."""
+    when = dt.datetime.fromisoformat(e["date"].replace("Z", "+00:00")).strftime("%b %d")
+    head = f"[{when}] {e['repo']} "
+    room = max_chars - len(head)
+    text = e["text"] if len(e["text"]) <= room else e["text"][:max(room - 1, 0)].rstrip() + "…"
+    cls = {"release": "x-ok", "new": "x-wr"}.get(e["kind"], "x-msg")
+    return (f'<tspan class="x-ts">[{when}]</tspan> <tspan class="x-bl">{escape(e["repo"])}</tspan> '
+            f'<tspan class="{cls}">{escape(text)}</tspan>')
+
+
+def activity_stream(px, py, pw, ph, size, lh, clip_id, activity, max_chars):
+    """Recent public GitHub activity. Scrolls forever when it overflows the panel."""
+    top = py + 48
+    if not activity:
+        return (f'<text x="{px + 22}" y="{top + 14 + size}" class="x-boot" font-size="{size}">'
+                f'<tspan class="x-ts">waiting for the first sync…</tspan></text>')
+    n = len(activity)
+    visible = int((ph - 60) // lh)
+    copies = 2 if n > visible else 1
+    lines = "".join(
+        f'<text x="{px + 22}" y="{top + 14 + size + i * lh:.1f}" class="x-boot" font-size="{size}">'
+        f'{activity_line(activity[i % n], max_chars)}</text>'
+        for i in range(n * copies))
+    if copies == 1:
+        return f'<g clip-path="url(#{clip_id})">{lines}</g>'
     fade = 40
-    return (f'<g clip-path="url(#{clip_id})"><g>{"".join(lines)}'
+    return (f'<g clip-path="url(#{clip_id})"><g>{lines}'
             f'<animateTransform attributeName="transform" type="translate" from="0 0" to="0 {-n * lh}" '
-            f'dur="{n * 0.85:.1f}s" repeatCount="indefinite"/></g>'
+            f'dur="{n * 1.6:.1f}s" repeatCount="indefinite"/></g>'
             f'<rect x="{px}" y="{top}" width="{pw}" height="{fade}" fill="url(#fadedown)"/>'
             f'<rect x="{px}" y="{py + ph - fade}" width="{pw}" height="{fade}" fill="url(#fadeup)"/></g>')
 
@@ -296,7 +340,7 @@ def defs(w, h, extra=""):
     .x-num  {{ font-weight: 800; }}
     .x-leg  {{ fill: #c9d4df; }}
     .x-boot {{ fill: #d5dee8; white-space: pre; }}
-    .x-ts {{ fill: #6b7c91; }} .x-ok {{ fill: {CYAN}; }} .x-hi {{ fill: {PINK}; }} .x-bl {{ fill: {BLUE}; }} .x-wr {{ fill: {AMBER}; }} .x-dim {{ fill: #8b9bb0; }}
+    .x-ts {{ fill: #6b7c91; }} .x-ok {{ fill: {CYAN}; }} .x-hi {{ fill: {PINK}; }} .x-bl {{ fill: {BLUE}; }} .x-wr {{ fill: {AMBER}; }} .x-msg {{ fill: #d5dee8; }} .x-dim {{ fill: #8b9bb0; }}
     .x-tick {{ fill: #8b9bb0; letter-spacing: 3px; }}
     .x-pulse {{ animation: xpulse 1.6s ease-in-out infinite; }}
     @keyframes xpulse {{ 50% {{ opacity: .25; }} }}
@@ -398,8 +442,8 @@ def render_desktop(stats):
     <text x="500" y="152" text-anchor="middle" class="x-sub" font-size="13">{escape(SUBTITLE)}</text>
     {role_cycler(500, 180, 16)}
     <g transform="translate(40 196) scale(0.9583)">{die_markup()}</g>
-    {panel(40, py, 492, 362, "DMESG -W · LIVE", 12, dot=True)}
-    {boot_stream(40, py, 492, 362, 14, 24, "bootclip")}
+    {panel(40, py, 492, 362, "GIT LOG · LATEST PUBLIC WORK", 12, dot=True)}
+    {activity_stream(40, py, 492, 362, 14, 24, "bootclip", stats.get("activity"), 52)}
     {panel(548, py, 412, 362, "TELEMETRY · LIVE FROM GITHUB", 12, dot=True)}
     {telemetry(548, py, 412, stats, dict(label=11, num=30, legend=12, row=58, wave_h=56))}
     <line x1="40" y1="1246" x2="960" y2="1246" stroke="#1a2430"/>
@@ -517,8 +561,8 @@ def render_mobile(stats):
     <text x="300" y="188" text-anchor="middle" class="x-sub" font-size="17" style="letter-spacing:1px">{escape(SUBTITLE)}</text>
     {role_cycler(300, 226, 19)}
     {chip}
-    {panel(20, by, 560, boot_h, "DMESG -W · LIVE", 15, dot=True)}
-    {boot_stream(20, by, 560, boot_h, 16, 28, "mboot")}
+    {panel(20, by, 560, boot_h, "GIT LOG · LATEST WORK", 15, dot=True)}
+    {activity_stream(20, by, 560, boot_h, 16, 28, "mboot", stats.get("activity"), 52)}
     {panel(20, ty, 560, tele_h, f"TELEMETRY · SYNC {escape(synced)}", 15, dot=True)}
     {telemetry(20, ty, 560, stats, dict(label=15, num=44, legend=17, row=92, wave_h=86))}
     <line x1="20" y1="{tk}" x2="580" y2="{tk}" stroke="#1a2430"/>
