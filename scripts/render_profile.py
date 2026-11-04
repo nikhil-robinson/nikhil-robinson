@@ -23,6 +23,9 @@ DIE = ROOT / "scripts" / "parts" / "die.svg"
 
 W, H = 1000, 1170
 CYAN, AMBER, PINK, BLUE, GREY = "#3ee6c1", "#ffb547", "#ff5d8f", "#7aa2ff", "#56677a"
+# Docs, markup and build files that would skew the language mix.
+NOT_CODE = {"Roff", "HTML", "CSS", "Makefile", "CMake", "Batchfile", "PowerShell", "Dockerfile",
+            "Jupyter Notebook", "TeX", "Markdown", "Linker Script"}
 LANG_COLORS = [CYAN, AMBER, PINK, BLUE, "#b48cff", GREY]
 
 QUERY = """
@@ -142,6 +145,7 @@ def waveform(x, y, w, h, weekly, begin):
 def language_bar(x, y, w, languages, begin):
     if not languages:
         return ""
+    languages = {k: v for k, v in languages.items() if k not in NOT_CODE}
     total = sum(languages.values()) or 1
     ranked = sorted(languages.items(), key=lambda kv: -kv[1])
     top, rest = ranked[:5], sum(v for _, v in ranked[5:])
