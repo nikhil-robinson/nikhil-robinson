@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93 40" width="93" height="40" role="img" aria-label="EMAIL">
+  <rect x="1" y="1" width="91" height="38" rx="8" fill="#ffffff" stroke="#0a8f73" stroke-opacity=".7"/>
+  <circle cx="18" cy="20" r="4" fill="#0a8f73"><animate attributeName="opacity" values="1;.3;1" dur="2s" repeatCount="indefinite"/></circle>
+  <text x="32" y="25" fill="#1f2328" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="1.5">EMAIL</text>
+</svg>

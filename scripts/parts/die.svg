@@ -15,8 +15,7 @@
     .s  { fill: #b4c0cc; font-size: 13.5px; }
     .k  { font-size: 11px; letter-spacing: 2px; font-weight: 700; }
     .pl { fill: #a9b6c4; font-size: 10px; font-weight: 700; }
-    .blk { fill: #111a24; stroke-width: 1.5; opacity: 0; animation: on .5s ease-out forwards; }
-    .lbl { opacity: 0; animation: on .5s ease-out forwards; }
+    .blk { fill: #111a24; stroke-width: 1.5; }
     .core { fill: #0d151e; stroke: #3ee6c1; stroke-width: 1; animation: core 2.4s ease-in-out infinite; }
     .bus { fill: none; stroke: #1f3142; stroke-width: 6; stroke-linecap: round; }
     .flow { fill: none; stroke: #3ee6c1; stroke-width: 2; stroke-dasharray: 4 18; stroke-linecap: round; animation: flow 1.4s linear infinite; opacity: .7; }
@@ -24,7 +23,6 @@
     .pad { fill: #1a2633; stroke: #2b3d50; animation: pad 3s ease-in-out infinite; }
     .scan { animation: scan 6s linear infinite; }
     .led { fill: #3ee6c1; animation: blink 1.2s steps(2) infinite; }
-    @keyframes on { to { opacity: 1 } }
     @keyframes core { 0%,100% { fill: #0d151e } 50% { fill: #154d44 } }
     @keyframes flow { to { stroke-dashoffset: -44 } }
     @keyframes pad { 0%,100% { fill: #1a2633 } 50% { fill: #2f5a52 } }

@@ -64,23 +64,30 @@ BLOCKS = [
     ("R&D", "EXPLORING", ["autonomous drones", "GPS-denied nav", "Edge AI on MCUs"], BLUE),
 ]
 
-BOOT = [
-    ('<tspan class="x-dim">BootROM</tspan> secure boot <tspan class="x-ok">OK</tspan> · OTA slot <tspan class="x-ok">B</tspan>', 0),
-    ('<tspan class="x-dim">U-Boot</tspan> · <tspan class="x-bl">Image</tspan> + <tspan class="x-bl">nr-26.dtb</tspan>', 0),
-    ('<tspan class="x-ts">[0.000]</tspan> Linux · <tspan class="x-hi">Nikhil Robinson NR-26</tspan>', 6),
-    ('<tspan class="x-ts">[0.104]</tspan> cpu: C · C++ · Rust · Bash <tspan class="x-ok">up</tspan>', 0),
-    ('<tspan class="x-ts">[0.218]</tspan> uart spi i2c can <tspan class="x-ok">bound</tspan>', 0),
-    ('<tspan class="x-ts">[0.402]</tspan> rtos: FreeRTOS + Zephyr <tspan class="x-ok">run</tspan>', 0),
-    ('<tspan class="x-ts">[0.611]</tspan> rknpu: model <tspan class="x-ok">deployed</tspan>', 0),
-    ('<tspan class="x-ts">[0.817]</tspan> wlan0 hci0 <tspan class="x-ok">up</tspan> · mqtt <tspan class="x-ok">ok</tspan>', 0),
-    ('<tspan class="x-ts">[1.003]</tspan> pm: low-power idle <tspan class="x-ok">on</tspan>', 0),
-    ('<tspan class="x-ok">Welcome to NR-26.</tspan> All systems nominal.', 8),
-    ('<tspan class="x-bl">nr-26 login:</tspan> hire_me', 6),
+# A dmesg-style stream that scrolls forever. (message, tag) with tag in {"OK", "WARN", ""}.
+LOG = [
+    ("bootrom: signature verified", "OK"),
+    ("ddr: training passed, first try", "OK"),
+    ("i2c-1: 0x68 ACK. writing this down.", ""),
+    ("uart: 115200 8N1, the one true baud", ""),
+    ("pinmux: schematic says 13", ""),
+    ("pinmux: scope says 14. scope wins.", "WARN"),
+    ("watchdog: fed. still alive.", "OK"),
+    ("heisenbug: gone after adding printf", "WARN"),
+    ("heisenbug: printf stays. forever.", ""),
+    ("errata rev F outranks the datasheet", ""),
+    ("bisect: 7 steps. culprit: me, 2023", ""),
+    ("thermal: 61°C, within spec", "OK"),
+    ("ota: slot B healthy, A on standby", "OK"),
+    ("analyzer: 3 of 4 probes alive", "WARN"),
+    ("pm: sleep current in µA range", "OK"),
+    ("dmesg: 0 errors. suspicious.", "WARN"),
+    ("kernel: hello from userspace", ""),
+    ("ready. ship it.", "OK"),
+    ("reboot: see you at 0.000", ""),
 ]
-LOGIN_CHARS = len("nr-26 login: hire_me ")
 
-TOOLCHAINS = ["e² studio · FSP", "STM32CubeIDE", "MPLAB X", "Code Composer Studio", "nRF Connect SDK", "ESP-IDF",
-              "PlatformIO", "GitHub Actions", "GitLab CI", "Bitbucket", "TDD + CI/CD", "Blender"]
+TOOLCHAINS = ["e² studio", "STM32CubeIDE", "MPLAB X", "Code Composer Studio", "PlatformIO", "GitHub Actions", "GitLab CI", "Bitbucket", "TDD + CI/CD", "Blender"]
 TICKER = "  ◆  ".join(TOOLCHAINS + ["SILICON BRING-UP TO CLOUD", "TECHPROGENY.COM"]) + "  ◆  "
 
 QUERY = """
@@ -221,18 +228,22 @@ def language_bar(x, y, w, languages, begin, legend_size):
     return "".join(out)
 
 
-def boot_log(x, y, begin, size, line_h):
-    out, ly = [], y
-    for i, (line, gap) in enumerate(BOOT):
-        ly += gap
-        out.append(f'<text x="{x}" y="{ly}" class="x-boot" font-size="{size}" opacity="0">{line}'
-                   f'<animate attributeName="opacity" from="0" to="1" dur=".2s" begin="{begin + i * 0.32:.2f}s" fill="freeze"/></text>')
-        ly += line_h
-    t = begin + len(BOOT) * 0.32
-    cx = x + LOGIN_CHARS * size * 0.6
-    out.append(f'<rect x="{cx:.0f}" y="{ly - line_h - size * 0.85:.0f}" width="{size * 0.55:.0f}" height="{size:.0f}" fill="{CYAN}" opacity="0">'
-               f'<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.01;.5;.51" dur="1s" begin="{t:.2f}s" repeatCount="indefinite"/></rect>')
-    return "".join(out)
+def boot_stream(px, py, pw, ph, size, lh, clip_id):
+    """LOG as an endless upward-scrolling stream inside a panel body."""
+    top, n = py + 48, len(LOG)
+    lines, t = [], 0.0
+    for i in range(2 * n):  # two copies so the loop is seamless
+        msg, tag = LOG[i % n]
+        t = (i % n) * 0.4137 + (i % n) ** 1.3 * 0.05
+        tag_svg = {"OK": ' <tspan class="x-ok">[ OK ]</tspan>', "WARN": ' <tspan class="x-wr">[WARN]</tspan>'}.get(tag, "")
+        lines.append(f'<text x="{px + 22}" y="{top + 14 + size + i * lh:.1f}" class="x-boot" font-size="{size}">'
+                     f'<tspan class="x-ts">[{t:7.3f}]</tspan> {escape(msg)}{tag_svg}</text>')
+    fade = 40
+    return (f'<g clip-path="url(#{clip_id})"><g>{"".join(lines)}'
+            f'<animateTransform attributeName="transform" type="translate" from="0 0" to="0 {-n * lh}" '
+            f'dur="{n * 0.85:.1f}s" repeatCount="indefinite"/></g>'
+            f'<rect x="{px}" y="{top}" width="{pw}" height="{fade}" fill="url(#fadedown)"/>'
+            f'<rect x="{px}" y="{py + ph - fade}" width="{pw}" height="{fade}" fill="url(#fadeup)"/></g>')
 
 
 def role_cycler(x, y, size):
@@ -264,6 +275,8 @@ def defs(w, h, extra=""):
       <stop offset="0" stop-color="{CYAN}" stop-opacity=".35"/><stop offset="1" stop-color="{CYAN}" stop-opacity="0"/>
     </linearGradient>
     <clipPath id="frame"><rect width="{w}" height="{h}" rx="22"/></clipPath>
+    <linearGradient id="fadedown" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#0a0e13"/><stop offset="1" stop-color="#0a0e13" stop-opacity="0"/></linearGradient>
+    <linearGradient id="fadeup" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#0a0e13" stop-opacity="0"/><stop offset="1" stop-color="#0a0e13"/></linearGradient>
     {extra}
   </defs>
   <style>
@@ -277,7 +290,7 @@ def defs(w, h, extra=""):
     .x-num  {{ font-weight: 800; }}
     .x-leg  {{ fill: #c9d4df; }}
     .x-boot {{ fill: #d5dee8; white-space: pre; }}
-    .x-ts {{ fill: #6b7c91; }} .x-ok {{ fill: {CYAN}; }} .x-hi {{ fill: {PINK}; }} .x-bl {{ fill: {BLUE}; }} .x-dim {{ fill: #8b9bb0; }}
+    .x-ts {{ fill: #6b7c91; }} .x-ok {{ fill: {CYAN}; }} .x-hi {{ fill: {PINK}; }} .x-bl {{ fill: {BLUE}; }} .x-wr {{ fill: {AMBER}; }} .x-dim {{ fill: #8b9bb0; }}
     .x-tick {{ fill: #8b9bb0; letter-spacing: 3px; }}
     .x-pulse {{ animation: xpulse 1.6s ease-in-out infinite; }}
     @keyframes xpulse {{ 50% {{ opacity: .25; }} }}
@@ -300,14 +313,14 @@ def telemetry(px, py, pw, stats, s):
     wy = r2 + s["row"] * 1.25
     ly = wy + s["wave_h"] + s["label"] * 3
     return "".join([
-        stat_cell(px + 22, r1, "STARS", stats.get("stars"), CYAN, 3.4, s["label"], s["num"]),
-        stat_cell(col2, r1, "PUBLIC REPOS", stats.get("repos"), AMBER, 3.6, s["label"], s["num"]),
-        stat_cell(px + 22, r2, "FOLLOWERS", stats.get("followers"), PINK, 3.8, s["label"], s["num"]),
-        stat_cell(col2, r2, "CONTRIBUTIONS · 1Y", stats.get("contributions"), BLUE, 4.0, s["label"], s["num"]),
+        stat_cell(px + 22, r1, "STARS", stats.get("stars"), CYAN, 0.3, s["label"], s["num"]),
+        stat_cell(col2, r1, "PUBLIC REPOS", stats.get("repos"), AMBER, 0.45, s["label"], s["num"]),
+        stat_cell(px + 22, r2, "FOLLOWERS", stats.get("followers"), PINK, 0.6, s["label"], s["num"]),
+        stat_cell(col2, r2, "CONTRIBUTIONS · 1Y", stats.get("contributions"), BLUE, 0.75, s["label"], s["num"]),
         f'<text x="{px + 22}" y="{wy - s["label"] * 0.8:.0f}" class="x-lbl" font-size="{s["label"]}">ACTIVITY · 52 WEEKS</text>',
-        waveform(px + 22, wy, pw - 44, s["wave_h"], stats.get("weekly"), 4.2, s["label"]),
+        waveform(px + 22, wy, pw - 44, s["wave_h"], stats.get("weekly"), 0.4, s["label"]),
         f'<text x="{px + 22}" y="{ly - s["label"] * 0.8:.0f}" class="x-lbl" font-size="{s["label"]}">LANGUAGES</text>',
-        language_bar(px + 22, ly, pw - 44, stats.get("languages"), 4.8, s["legend"]),
+        language_bar(px + 22, ly, pw - 44, stats.get("languages"), 0.8, s["legend"]),
     ])
 
 
@@ -351,12 +364,9 @@ def die_markup():
     for i, (kicker, title, lines, color) in enumerate(BLOCKS):
         r, c = divmod(i, 4)
         x, y = 90 + c * (bw + gap), 90 + r * (bh + gap)
-        delay = f"animation-delay:{0.2 + i * 0.18:.2f}s"
         blocks.append(
-            f'<rect class="blk" x="{x}" y="{y}" width="{bw}" height="{bh}" rx="4" stroke="{color}" style="{delay}"/>'
-            f'<g class="lbl" style="{delay}">'
-            + block_body(x, y, bw, bh, kicker, title, lines, color, "k", "t", "s", 24, 52, 80, 22)
-            + "</g>")
+            f'<rect class="blk" x="{x}" y="{y}" width="{bw}" height="{bh}" rx="4" stroke="{color}"/>'
+            + block_body(x, y, bw, bh, kicker, title, lines, color, "k", "t", "s", 24, 52, 80, 22))
     for token, val in (("TOP_PADS", top), ("BOTTOM_PADS", bottom), ("SIDE_PADS", side), ("BLOCKS", "".join(blocks))):
         src = src.replace("{{" + token + "}}", val)
     return re.search(r"<svg[^>]*>(.*)</svg>", src, re.S).group(1)
@@ -370,7 +380,7 @@ def render_desktop(stats):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img"
   aria-label="Nikhil Robinson, Embedded Linux and firmware engineer. Animated profile frame with a chip floorplan of skills, a boot log and live GitHub telemetry.">
   <title>Nikhil Robinson · NR-26</title>
-  {defs(W, H, '<clipPath id="tick"><rect x="40" y="1246" width="920" height="44"/></clipPath>')}
+  {defs(W, H, f'<clipPath id="tick"><rect x="40" y="1246" width="920" height="44"/></clipPath><clipPath id="bootclip"><rect x="40" y="{py + 47}" width="492" height="{362 - 48}"/></clipPath>')}
   <g clip-path="url(#frame)">
     <rect width="{W}" height="{H}" fill="#070a0e"/>
     <text x="40" y="38" class="x-bar" font-size="13">NR-26 // ENGINEER-ON-CHIP</text>
@@ -382,8 +392,8 @@ def render_desktop(stats):
     <text x="500" y="152" text-anchor="middle" class="x-sub" font-size="13">{escape(SUBTITLE)}</text>
     {role_cycler(500, 180, 16)}
     <g transform="translate(40 196) scale(0.9583)">{die_markup()}</g>
-    {panel(40, py, 492, 362, "/DEV/TTYS0 · 115200 8N1", 12)}
-    {boot_log(62, py + 80, 2.6, 14, 24)}
+    {panel(40, py, 492, 362, "DMESG -W · LIVE", 12, dot=True)}
+    {boot_stream(40, py, 492, 362, 14, 24, "bootclip")}
     {panel(548, py, 412, 362, "TELEMETRY · LIVE FROM GITHUB", 12, dot=True)}
     {telemetry(548, py, 412, stats, dict(label=11, num=30, legend=12, row=58, wave_h=56))}
     <line x1="40" y1="1246" x2="960" y2="1246" stroke="#1a2430"/>
@@ -397,49 +407,76 @@ def render_desktop(stats):
 # --------------------------------------------------------------------------- mobile frame
 
 def mobile_chip(y0):
-    """Portrait chip: vendor pads, 2-column block grid, interface pads. Returns (svg, bottom_y)."""
-    out, x0, w = [], 20, 560
-    cols, gap = 4, 6
-    pw = (w - 44 - (cols - 1) * gap) / cols
+    """Portrait chip package: leads on all sides, pin-1 mark, seal ring, die grid,
+    bond pads, bus lines and the block grid. Returns (svg, bottom_y)."""
+    out, x0, w = [], 44, 512          # package body; leads stick out 18px on each side
+    pad_cols, gap = 4, 6
+    inner_x, inner_w = x0 + 22, w - 44
+    pw = (inner_w - (pad_cols - 1) * gap) / pad_cols
+    vend_y = y0 + 70
     for i, v in enumerate(VENDORS):
-        r, c = divmod(i, cols)
-        px, py = x0 + 22 + c * (pw + gap), y0 + 62 + r * 44
-        out.append(f'<rect class="m-pad" x="{px:.1f}" y="{py}" width="{pw:.1f}" height="36" rx="4" style="animation-delay:{i * .15:.2f}s"/>'
-                   f'<text x="{px + pw / 2:.1f}" y="{py + 24}" class="m-pl" text-anchor="middle">{escape(v)}</text>')
-    gy = y0 + 62 + -(-len(VENDORS) // cols) * 44 + 18
-    bw, bh, bgap = 254, 160, 12
+        r, c = divmod(i, pad_cols)
+        px, py = inner_x + c * (pw + gap), vend_y + r * 42
+        out.append(f'<rect class="m-pad" x="{px:.1f}" y="{py}" width="{pw:.1f}" height="34" rx="3" style="animation-delay:{i * .15:.2f}s"/>'
+                   f'<text x="{px + pw / 2:.1f}" y="{py + 23}" class="m-pl" text-anchor="middle">{escape(v)}</text>')
+    gy = vend_y + -(-len(VENDORS) // pad_cols) * 42 + 22
+    bgap = 14
+    bw, bh = (inner_w - bgap) / 2, 160
+    rows = -(-len(BLOCKS) // 2)
+    grid_h = rows * bh + (rows - 1) * bgap
+    # bus: one vertical spine between the columns, one horizontal run between each row
+    cx = inner_x + bw + bgap / 2
+    bus = [f"M{cx:.1f} {gy - 10} V{gy + grid_h + 10}"]
+    bus += [f"M{inner_x - 8} {gy + r * (bh + bgap) - bgap / 2:.1f} H{inner_x + inner_w + 8}" for r in range(1, rows)]
+    out.append(f'<path d="{" ".join(bus)}" class="m-bus"/>'
+               f'<path d="{bus[0]}" class="m-flow"/>'
+               + "".join(f'<path d="{b}" class="m-flow" style="animation-duration:{1.6 + k * .3:.1f}s"/>' for k, b in enumerate(bus[1:])))
     for idx, (kicker, title, lines, color) in enumerate(BLOCKS):
         r, c = divmod(idx, 2)
-        bx, by = x0 + 22 + c * (bw + bgap), gy + r * (bh + bgap)
-        out.append(f'<g opacity="0"><animate attributeName="opacity" from="0" to="1" dur=".5s" begin="{0.3 + idx * 0.18:.2f}s" fill="freeze"/>'
-                   f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="6" fill="#111a24" stroke="{color}" stroke-width="2"/>'
-                   + block_body(bx + 2, by, bw - 4, bh, kicker, title, lines, color, "m-kick", "m-title", "m-line", 28, 62, 94, 25)
-                   + "</g>")
-    iy = gy + -(-len(BLOCKS) // 2) * (bh + bgap) + 4
-    iw = (w - 44 - 8 * 6) / 9
+        bx, by = inner_x + c * (bw + bgap), gy + r * (bh + bgap)
+        out.append(f'<rect x="{bx:.1f}" y="{by}" width="{bw:.1f}" height="{bh}" rx="5" fill="#111a24" stroke="{color}" stroke-width="2"/>'
+                   + block_body(bx, by, bw, bh, kicker, title, lines, color, "m-kick", "m-title", "m-line", 28, 62, 94, 25))
+    iy = gy + grid_h + 22
+    iw = (inner_w - 8 * 5) / 9
     for i, v in enumerate(IFACES):
-        px = x0 + 22 + i * (iw + 6)
-        out.append(f'<rect class="m-pad" x="{px:.1f}" y="{iy}" width="{iw:.1f}" height="34" rx="4" style="animation-delay:{i * .2:.2f}s"/>'
-                   f'<text x="{px + iw / 2:.1f}" y="{iy + 23}" class="m-pl" text-anchor="middle" style="font-size:13px">{v}</text>')
-    bottom = iy + 58
-    frame = (f'<rect x="{x0}" y="{y0}" width="{w}" height="{bottom - y0}" rx="12" fill="#0e141b" stroke="#24313f" stroke-width="2"/>'
-             f'<text x="{x0 + 22}" y="{y0 + 38}" class="m-kick" fill="{CYAN}">NR-26 · SILICON I WORK ON</text>'
-             f'<circle cx="{x0 + w - 26}" cy="{y0 + 32}" r="6" fill="{CYAN}" class="x-pulse"/>'
-             f'<rect x="{x0}" y="{y0}" width="{w}" height="90" fill="url(#mscan)" class="m-scan"/>')
-    return frame + "".join(out), bottom
+        px = inner_x + i * (iw + 5)
+        out.append(f'<rect class="m-pad" x="{px:.1f}" y="{iy}" width="{iw:.1f}" height="32" rx="3" style="animation-delay:{i * .2:.2f}s"/>'
+                   f'<text x="{px + iw / 2:.1f}" y="{iy + 21}" class="m-pl" text-anchor="middle" style="font-size:12px;letter-spacing:0">{v}</text>')
+    bottom = iy + 70
+    h = bottom - y0
+    # leads
+    leads = []
+    for yy in range(y0 + 30, bottom - 20, 30):
+        leads.append(f'<rect x="{x0 - 18}" y="{yy}" width="18" height="12" rx="1.5" class="m-lead"/>'
+                     f'<rect x="{x0 + w}" y="{yy}" width="18" height="12" rx="1.5" class="m-lead"/>')
+    for xx in range(x0 + 30, x0 + w - 20, 30):
+        leads.append(f'<rect x="{xx}" y="{y0 - 18}" width="12" height="18" rx="1.5" class="m-lead"/>'
+                     f'<rect x="{xx}" y="{bottom}" width="12" height="18" rx="1.5" class="m-lead"/>')
+    body = (f'<rect x="{x0}" y="{y0}" width="{w}" height="{h}" rx="10" fill="#0e141b" stroke="#24313f" stroke-width="2"/>'
+            f'<rect x="{x0 + 10}" y="{y0 + 10}" width="{w - 20}" height="{h - 20}" rx="6" fill="url(#mgrid)" stroke="#1f3142" stroke-width="2" stroke-dasharray="6 4"/>'
+            f'<circle cx="{x0 + w / 2}" cy="{y0}" r="14" fill="#070a0e" stroke="#24313f" stroke-width="2"/>'
+            f'<rect x="{x0 + w / 2 - 16}" y="{y0 - 20}" width="32" height="20" fill="#070a0e"/>'
+            f'<circle cx="{x0 + 30}" cy="{y0 + 30}" r="7" fill="#24313f"/>'
+            f'<text x="{x0 + 46}" y="{y0 + 36}" class="m-kick" fill="{CYAN}">NR-26</text>'
+            f'<text x="{x0 + w - 22}" y="{y0 + 36}" class="m-kick" fill="#6b7c91" text-anchor="end">SILICON I WORK ON</text>'
+            f'<text x="{x0 + w / 2}" y="{bottom - 20}" class="m-mark" text-anchor="middle">NR-26 · REV C · NIKHIL ROBINSON</text>'
+            f'<rect x="{x0 + 10}" y="{y0}" width="{w - 20}" height="90" fill="url(#mscan)" class="m-scan"/>')
+    return "".join(leads) + body + "".join(out), bottom + 18
 
 
 def render_mobile(stats):
     W = 600
     synced = stats.get("synced", "pending")
-    chip, chip_end = mobile_chip(250)
+    chip, chip_end = mobile_chip(270)
     by = chip_end + 24
-    boot_h = 64 + len(BOOT) * 31 + 40
+    boot_h = 420
     ty = by + boot_h + 24
     tele_h = 545
     tk = ty + tele_h + 24
     H = tk + 70
     extra = (f'<clipPath id="mtick"><rect x="20" y="{tk}" width="560" height="50"/></clipPath>'
+             f'<clipPath id="mboot"><rect x="20" y="{by + 47}" width="560" height="{boot_h - 48}"/></clipPath>'
+             f'<pattern id="mgrid" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M14 0H0V14" fill="none" stroke="#16202b"/></pattern>'
              f'<linearGradient id="mscan" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="{CYAN}" stop-opacity="0"/>'
              f'<stop offset=".5" stop-color="{CYAN}" stop-opacity=".14"/><stop offset="1" stop-color="{CYAN}" stop-opacity="0"/></linearGradient>')
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img"
@@ -450,13 +487,18 @@ def render_mobile(stats):
     .m-pad {{ fill: #1a2633; stroke: #2b3d50; animation: mpad 3s ease-in-out infinite; }}
     .m-pl {{ fill: #d5dee8; font-size: 14px; font-weight: 700; letter-spacing: 1px; }}
     .m-kick {{ font-size: 14px; letter-spacing: 2px; font-weight: 700; }}
-    .m-title {{ fill: #f0f5fa; font-size: 22px; font-weight: 800; letter-spacing: 1px; }}
+    .m-title {{ fill: #f0f5fa; font-size: 21px; font-weight: 800; letter-spacing: 1px; }}
     .m-line {{ fill: #c9d4df; font-size: 17px; }}
     .m-core {{ fill: #0d151e; stroke: {CYAN}; animation: mcore 2.4s ease-in-out infinite; }}
     .m-scan {{ animation: mscan 7s linear infinite; }}
+    .m-lead {{ fill: #7d8a99; }}
+    .m-mark {{ fill: #6b7c91; font-size: 12px; letter-spacing: 2px; font-weight: 700; }}
+    .m-bus {{ fill: none; stroke: #1f3142; stroke-width: 6; stroke-linecap: round; }}
+    .m-flow {{ fill: none; stroke: {CYAN}; stroke-width: 2; stroke-dasharray: 4 18; stroke-linecap: round; opacity: .7; animation: mflow 1.4s linear infinite; }}
+    @keyframes mflow {{ to {{ stroke-dashoffset: -44 }} }}
     @keyframes mpad {{ 0%,100% {{ fill: #1a2633 }} 50% {{ fill: #2f5a52 }} }}
     @keyframes mcore {{ 0%,100% {{ fill: #0d151e }} 50% {{ fill: #154d44 }} }}
-    @keyframes mscan {{ from {{ transform: translateY(0) }} to {{ transform: translateY({chip_end - 340}px) }} }}
+    @keyframes mscan {{ from {{ transform: translateY(0) }} to {{ transform: translateY({chip_end - 380}px) }} }}
   </style>
   <g clip-path="url(#frame)">
     <rect width="{W}" height="{H}" fill="#070a0e"/>
@@ -469,8 +511,8 @@ def render_mobile(stats):
     <text x="300" y="188" text-anchor="middle" class="x-sub" font-size="17" style="letter-spacing:1px">{escape(SUBTITLE)}</text>
     {role_cycler(300, 226, 19)}
     {chip}
-    {panel(20, by, 560, boot_h, "/DEV/TTYS0 · 115200 8N1", 15)}
-    {boot_log(40, by + 86, 2.6, 18, 31)}
+    {panel(20, by, 560, boot_h, "DMESG -W · LIVE", 15, dot=True)}
+    {boot_stream(20, by, 560, boot_h, 16, 28, "mboot")}
     {panel(20, ty, 560, tele_h, f"TELEMETRY · SYNC {escape(synced)}", 15, dot=True)}
     {telemetry(20, ty, 560, stats, dict(label=15, num=44, legend=17, row=92, wave_h=86))}
     <line x1="20" y1="{tk}" x2="580" y2="{tk}" stroke="#1a2430"/>
@@ -504,12 +546,35 @@ def button(label, color):
 '''
 
 
+# Dark palette -> light palette. Every colour in the frames is a literal hex from the
+# dark theme, so the light variant is a straight one-pass substitution.
+LIGHT = {
+    "#070a0e": "#f6f8fa", "#0a0e13": "#ffffff", "#0e141b": "#eef2f6", "#111a24": "#ffffff",
+    "#0c1218": "#f6f8fa", "#0d151e": "#eef7f4", "#154d44": "#c6eee3", "#1a2633": "#e3e9ef",
+    "#2f5a52": "#b5e4d7", "#16202b": "#e2e8ee", "#1f3142": "#d2dbe4", "#1a2430": "#dde3ea",
+    "#24313f": "#c9d2dc", "#2b3d50": "#bcc6d1",
+    "#e6edf3": "#1f2328", "#f0f5fa": "#1f2328", "#d5dee8": "#24292f", "#c9d4df": "#2f363d",
+    "#b4c0cc": "#424a53", "#a9b6c4": "#57606a", "#8b9bb0": "#59636e", "#6b7c91": "#6e7781",
+    "#56677a": "#8c959f",
+    CYAN: "#0a8f73", AMBER: "#b35900", PINK: "#cf2261", BLUE: "#2f5bd3", "#b48cff": "#7c4dcc",
+}
+
+
+def to_light(svg):
+    return re.sub("|".join(re.escape(k) for k in LIGHT), lambda m: LIGHT[m.group(0)], svg)
+
+
+def write_pair(name, svg):
+    (IMAGES / f"{name}.svg").write_text(svg)
+    (IMAGES / f"{name}-light.svg").write_text(to_light(svg))
+
+
 def main():
     stats = load_stats()
-    (IMAGES / "profile.svg").write_text(render_desktop(stats))
-    (IMAGES / "profile-mobile.svg").write_text(render_mobile(stats))
+    write_pair("profile", render_desktop(stats))
+    write_pair("profile-mobile", render_mobile(stats))
     for slug, label, color in BUTTONS:
-        (IMAGES / f"link-{slug}.svg").write_text(button(label, color))
+        write_pair(f"link-{slug}", button(label, color))
     print(f"rendered profile frames (synced: {stats.get('synced', 'never')})")
 
 
