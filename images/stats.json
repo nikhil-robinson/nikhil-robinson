@@ -1,4 +1,150 @@
 {
+  "activity": [
+    {
+      "date": "2026-10-21T19:08:20Z",
+      "repo": "WanGP",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2026-10-05T09:40:53Z",
+      "repo": "rea",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2026-09-28T09:12:24Z",
+      "repo": "Q2",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2026-09-27T08:51:50Z",
+      "repo": "RelateAnything",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2026-07-01T20:17:46Z",
+      "repo": "embedded_guru",
+      "kind": "release",
+      "text": "released v0.4.3"
+    },
+    {
+      "date": "2026-07-01T20:13:36Z",
+      "repo": "embedded_guru",
+      "kind": "commit",
+      "text": "remove redundant FEATURE.md file"
+    },
+    {
+      "date": "2026-07-01T20:12:05Z",
+      "repo": "embedded_guru",
+      "kind": "release",
+      "text": "released v0.4.2"
+    },
+    {
+      "date": "2026-07-01T20:11:13Z",
+      "repo": "embedded_guru",
+      "kind": "commit",
+      "text": "docs: remove duplicate tagline, fix banner text to canonical wording"
+    },
+    {
+      "date": "2026-07-01T20:08:49Z",
+      "repo": "embedded_guru",
+      "kind": "commit",
+      "text": "docs: revamp README with futuristic banner, Claude Code install steps\u2026"
+    },
+    {
+      "date": "2026-07-01T19:59:17Z",
+      "repo": "embedded_guru",
+      "kind": "commit",
+      "text": "fix: highlight 'embeddedguru run' as primary start method in install \u2026"
+    },
+    {
+      "date": "2026-07-01T19:47:59Z",
+      "repo": "embedded_guru",
+      "kind": "commit",
+      "text": "feat: update scorecard generation from PDF to PNG format and clarify \u2026"
+    },
+    {
+      "date": "2026-06-29T10:17:25Z",
+      "repo": "embedded_guru",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2026-05-31T17:16:48Z",
+      "repo": "klipper_esp32",
+      "kind": "commit",
+      "text": "Refactor console configuration to use KLIPPER prefix for UART and USB\u2026"
+    },
+    {
+      "date": "2026-05-31T01:56:02Z",
+      "repo": "klipper_esp32",
+      "kind": "commit",
+      "text": "Add serial IRQ handling and improve timer initialization logic"
+    },
+    {
+      "date": "2026-05-17T21:19:35Z",
+      "repo": "klipper_esp32",
+      "kind": "commit",
+      "text": "Refactor PWM setup to configure timer only after successful initializ\u2026"
+    },
+    {
+      "date": "2026-05-17T21:08:09Z",
+      "repo": "klipper_esp32",
+      "kind": "commit",
+      "text": "Refactor board components for improved performance and maintainabilit\u2026"
+    },
+    {
+      "date": "2026-05-17T20:38:36Z",
+      "repo": "klipper_esp32",
+      "kind": "commit",
+      "text": "Enhance CMake configuration for build artifact management and improve\u2026"
+    },
+    {
+      "date": "2026-05-11T12:09:35Z",
+      "repo": "ble_promiscuous_mode_tx",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2025-11-21T22:01:17Z",
+      "repo": "nikhil-robinson",
+      "kind": "commit",
+      "text": "Modify GitHub stats display settings"
+    },
+    {
+      "date": "2025-11-21T21:52:12Z",
+      "repo": "nikhil-robinson",
+      "kind": "commit",
+      "text": "Update Techprogeny badge color in README"
+    },
+    {
+      "date": "2025-11-21T21:43:51Z",
+      "repo": "nikhil-robinson",
+      "kind": "commit",
+      "text": "Revise README with new skills and descriptions"
+    },
+    {
+      "date": "2025-11-21T21:38:02Z",
+      "repo": "nikhil-robinson",
+      "kind": "commit",
+      "text": "Revise README with updated info and stats"
+    },
+    {
+      "date": "2025-11-10T13:54:56Z",
+      "repo": "nikhil-robinson",
+      "kind": "commit",
+      "text": "Update README.md"
+    },
+    {
+      "date": "2024-04-06T11:41:34Z",
+      "repo": "klipper_esp32",
+      "kind": "new",
+      "text": "repository created"
+    }
+  ],
   "stars": 138,
   "repos": 35,
   "followers": 19,
@@ -60,7 +206,7 @@
   ],
   "languages": {
     "Jupyter Notebook": 6591,
-    "Python": 8017748,
+    "Python": 8019719,
     "Dockerfile": 1427,
     "C++": 203299606,
     "C": 52198172,
