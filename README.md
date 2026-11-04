@@ -20,13 +20,13 @@ Typical applications: new silicon bring-up · secure boot chains · Linux BSPs a
 
 ### 2 · Boot sequence
 
-<img src="images/boot.svg" alt="Serial boot log: boot ROM verifies the signature, U-Boot loads the kernel, the kernel probes C, C++, Python and Bash cores, drivers, RTOS core, NPU and radios, then a login prompt answered with hire_me." width="100%"/>
+<img src="images/boot.svg" alt="Serial boot log: boot ROM verifies the signature, U-Boot loads the kernel, the kernel brings up C, C++, Rust and Bash cores, drivers, RTOS core, NPU and radios, then a login prompt answered with hire_me." width="100%"/>
 
 ### 3 · Functional blocks
 
 | Block | Function | Implemented with |
 |---|---|---|
-| 🟢 **CPU cluster** | General compute | C · C++ · Python · Bash |
+| 🟢 **CPU cluster** | General compute | C · C++ · Rust · Bash |
 | 🟡 **Secure enclave** | Root of trust | Secure Boot · Flash Encryption · AES · signed OTA |
 | 🟡 **Boot ROM** | Boot chain | U-Boot · A/B updates · board bring-up over JTAG/SWD |
 | 🔵 **Application subsystem** | Linux / BSP | Kernel drivers · Device Tree · Yocto · Buildroot · Qt · Slint · LVGL |
