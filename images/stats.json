@@ -1,30 +1,6 @@
 {
   "activity": [
     {
-      "date": "2026-10-21T19:08:20Z",
-      "repo": "WanGP",
-      "kind": "new",
-      "text": "repository created"
-    },
-    {
-      "date": "2026-10-05T09:40:53Z",
-      "repo": "rea",
-      "kind": "new",
-      "text": "repository created"
-    },
-    {
-      "date": "2026-09-28T09:12:24Z",
-      "repo": "Q2",
-      "kind": "new",
-      "text": "repository created"
-    },
-    {
-      "date": "2026-09-27T08:51:50Z",
-      "repo": "RelateAnything",
-      "kind": "new",
-      "text": "repository created"
-    },
-    {
       "date": "2026-07-01T20:17:46Z",
       "repo": "embedded_guru",
       "kind": "release",
@@ -109,40 +85,64 @@
       "text": "repository created"
     },
     {
-      "date": "2025-11-21T22:01:17Z",
-      "repo": "nikhil-robinson",
+      "date": "2026-03-25T17:05:35Z",
+      "repo": "bambu-makerworld",
       "kind": "commit",
-      "text": "Modify GitHub stats display settings"
+      "text": "Initial commit"
     },
     {
-      "date": "2025-11-21T21:52:12Z",
-      "repo": "nikhil-robinson",
-      "kind": "commit",
-      "text": "Update Techprogeny badge color in README"
-    },
-    {
-      "date": "2025-11-21T21:43:51Z",
-      "repo": "nikhil-robinson",
-      "kind": "commit",
-      "text": "Revise README with new skills and descriptions"
-    },
-    {
-      "date": "2025-11-21T21:38:02Z",
-      "repo": "nikhil-robinson",
-      "kind": "commit",
-      "text": "Revise README with updated info and stats"
-    },
-    {
-      "date": "2025-11-10T13:54:56Z",
-      "repo": "nikhil-robinson",
-      "kind": "commit",
-      "text": "Update README.md"
-    },
-    {
-      "date": "2024-04-06T11:41:34Z",
-      "repo": "klipper_esp32",
+      "date": "2026-03-25T17:05:34Z",
+      "repo": "bambu-makerworld",
       "kind": "new",
       "text": "repository created"
+    },
+    {
+      "date": "2026-01-23T13:17:18Z",
+      "repo": "blackbox",
+      "kind": "commit",
+      "text": "feat: Update ArduPilot message structures and logging for PID Review \u2026"
+    },
+    {
+      "date": "2026-01-23T12:28:39Z",
+      "repo": "blackbox",
+      "kind": "commit",
+      "text": "feat: Add support for ArduPilot FMT and FMTU messages for Mission Pla\u2026"
+    },
+    {
+      "date": "2026-01-23T12:01:51Z",
+      "repo": "blackbox",
+      "kind": "commit",
+      "text": "feat: Enhance logging capabilities with ArduPilot format support and \u2026"
+    },
+    {
+      "date": "2026-01-23T11:34:05Z",
+      "repo": "blackbox",
+      "kind": "commit",
+      "text": "fix: Update license and correct copyright year"
+    },
+    {
+      "date": "2026-01-23T11:29:09Z",
+      "repo": "blackbox",
+      "kind": "commit",
+      "text": "feat: Implement HAL for Blackbox logger with ESP-IDF and POSIX support"
+    },
+    {
+      "date": "2025-12-12T11:49:08Z",
+      "repo": "wch-riscv-compiler",
+      "kind": "commit",
+      "text": "2025"
+    },
+    {
+      "date": "2025-11-28T08:55:48Z",
+      "repo": "blackbox",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2025-11-17T12:16:15Z",
+      "repo": "fusion_ahrs_idf",
+      "kind": "commit",
+      "text": "added examples"
     }
   ],
   "stars": 138,
@@ -206,7 +206,7 @@
   ],
   "languages": {
     "Jupyter Notebook": 6591,
-    "Python": 8019719,
+    "Python": 8019821,
     "Dockerfile": 1427,
     "C++": 203299606,
     "C": 52198172,
