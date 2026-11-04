@@ -98,7 +98,7 @@ query($login: String!) {
 ACTIVITY_QUERY = """
 query($login: String!, $uid: ID!) {
   user(login: $login) {
-    repositories(ownerAffiliations: OWNER, privacy: PUBLIC, first: 8,
+    repositories(ownerAffiliations: OWNER, privacy: PUBLIC, isFork: false, first: 9,
                  orderBy: {field: PUSHED_AT, direction: DESC}) {
       nodes {
         name
@@ -135,6 +135,8 @@ def fetch_activity(token, uid):
     events = []
     for repo in graphql(token, ACTIVITY_QUERY, {"login": USER, "uid": uid})["user"]["repositories"]["nodes"]:
         name = repo["name"]
+        if name == USER:  # the profile repo itself is not "work"
+            continue
         events.append({"date": repo["createdAt"], "repo": name, "kind": "new", "text": "repository created"})
         for rel in repo["releases"]["nodes"]:
             if rel["publishedAt"]:
