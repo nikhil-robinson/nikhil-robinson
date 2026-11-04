@@ -2,7 +2,7 @@ name: Render profile frame
 
 on:
   schedule:
-    - cron: "17 3 * * *"   # daily refresh of the live telemetry
+    - cron: "17 * * * *"   # hourly refresh of the live telemetry
   workflow_dispatch:
   push:
     branches: [main, "claude/**"]
