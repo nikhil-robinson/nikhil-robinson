@@ -1,6 +1,12 @@
 {
   "activity": [
     {
+      "date": "2026-11-05T17:04:52Z",
+      "repo": "esp-ndf",
+      "kind": "commit",
+      "text": "Switch the license from BSD-3-Clause to MIT"
+    },
+    {
       "date": "2026-11-04T19:46:48Z",
       "repo": "esp-ndf",
       "kind": "commit",
@@ -23,12 +29,6 @@
       "repo": "esp-ndf",
       "kind": "commit",
       "text": "docs: BLE central and multiple links are in v1"
-    },
-    {
-      "date": "2026-11-02T19:10:00Z",
-      "repo": "esp-ndf",
-      "kind": "commit",
-      "text": "BLE: record two more throughput experiments (no effect)"
     },
     {
       "date": "2026-10-13T05:40:45Z",
@@ -148,7 +148,7 @@
   "stars": 134,
   "repos": 38,
   "followers": 19,
-  "contributions": 789,
+  "contributions": 1078,
   "weekly": [
     38,
     33,
@@ -165,8 +165,8 @@
     0,
     1,
     17,
-    9,
-    3,
+    11,
+    6,
     0,
     0,
     2,
@@ -200,9 +200,9 @@
     3,
     1,
     22,
+    355,
     178,
-    89,
-    19
+    37
   ],
   "languages": {
     "Jupyter Notebook": 6591,
