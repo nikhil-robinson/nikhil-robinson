@@ -1,52 +1,34 @@
 {
   "activity": [
     {
-      "date": "2026-07-01T20:17:46Z",
-      "repo": "embedded_guru",
-      "kind": "release",
-      "text": "released v0.4.3"
-    },
-    {
-      "date": "2026-07-01T20:13:36Z",
-      "repo": "embedded_guru",
+      "date": "2026-11-04T19:46:48Z",
+      "repo": "esp-ndf",
       "kind": "commit",
-      "text": "remove redundant FEATURE.md file"
+      "text": "README: drop the link to the moved COMPARISON.md"
     },
     {
-      "date": "2026-07-01T20:12:05Z",
-      "repo": "embedded_guru",
-      "kind": "release",
-      "text": "released v0.4.2"
-    },
-    {
-      "date": "2026-07-01T20:11:13Z",
-      "repo": "embedded_guru",
+      "date": "2026-11-04T19:46:39Z",
+      "repo": "esp-ndf",
       "kind": "commit",
-      "text": "docs: remove duplicate tagline, fix banner text to canonical wording"
+      "text": "Repo tidy + new README: RF scripts in tools/rf, bench result files in\u2026"
     },
     {
-      "date": "2026-07-01T20:08:49Z",
-      "repo": "embedded_guru",
+      "date": "2026-11-02T21:39:25Z",
+      "repo": "esp-ndf",
       "kind": "commit",
-      "text": "docs: revamp README with futuristic banner, Claude Code install steps\u2026"
+      "text": "BLE: 244-byte notifications at 726-739 kbit/s (was 282): event length\u2026"
     },
     {
-      "date": "2026-07-01T19:59:17Z",
-      "repo": "embedded_guru",
+      "date": "2026-11-02T19:10:34Z",
+      "repo": "esp-ndf",
       "kind": "commit",
-      "text": "fix: highlight 'embeddedguru run' as primary start method in install \u2026"
+      "text": "docs: BLE central and multiple links are in v1"
     },
     {
-      "date": "2026-07-01T19:47:59Z",
-      "repo": "embedded_guru",
+      "date": "2026-11-02T19:10:00Z",
+      "repo": "esp-ndf",
       "kind": "commit",
-      "text": "feat: update scorecard generation from PDF to PNG format and clarify \u2026"
-    },
-    {
-      "date": "2026-06-29T10:17:25Z",
-      "repo": "embedded_guru",
-      "kind": "new",
-      "text": "repository created"
+      "text": "BLE: record two more throughput experiments (no effect)"
     },
     {
       "date": "2026-05-31T17:16:48Z",
@@ -97,6 +79,12 @@
       "text": "repository created"
     },
     {
+      "date": "2026-02-17T09:05:13Z",
+      "repo": "esp-ndf",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
       "date": "2026-01-23T13:17:18Z",
       "repo": "blackbox",
       "kind": "commit",
@@ -143,12 +131,24 @@
       "repo": "fusion_ahrs_idf",
       "kind": "commit",
       "text": "added examples"
+    },
+    {
+      "date": "2025-11-17T11:45:26Z",
+      "repo": "fusion_ahrs_idf",
+      "kind": "commit",
+      "text": "fusion_ahrs_idf"
+    },
+    {
+      "date": "2025-11-17T11:35:07Z",
+      "repo": "fusion_ahrs_idf",
+      "kind": "commit",
+      "text": "WIP"
     }
   ],
-  "stars": 138,
+  "stars": 134,
   "repos": 35,
   "followers": 19,
-  "contributions": 504,
+  "contributions": 787,
   "weekly": [
     38,
     33,
@@ -200,20 +200,20 @@
     3,
     1,
     22,
-    1,
-    0,
-    0
+    178,
+    89,
+    17
   ],
   "languages": {
     "Jupyter Notebook": 6591,
-    "Python": 8019821,
+    "Python": 8399627,
     "Dockerfile": 1427,
-    "C++": 203299606,
-    "C": 52198172,
-    "Shell": 1648381,
-    "CMake": 2554042,
-    "Makefile": 435147,
-    "Assembly": 64503,
+    "C++": 203641190,
+    "C": 58451710,
+    "Shell": 1672388,
+    "CMake": 2597048,
+    "Makefile": 476466,
+    "Assembly": 650136,
     "Roff": 11037421,
     "JavaScript": 482360,
     "Batchfile": 6742,
@@ -224,12 +224,13 @@
     "Swift": 603530,
     "Objective-C": 200729,
     "HTML": 362290,
-    "Linker Script": 60646,
+    "Linker Script": 62501,
     "XC": 93634,
     "PLSQL": 45772,
     "PowerShell": 9033,
     "Tcl": 18486,
-    "XS": 17722
+    "XS": 17722,
+    "Rust": 6965
   },
-  "synced": "2026-11-04"
+  "synced": "2026-11-05"
 }
