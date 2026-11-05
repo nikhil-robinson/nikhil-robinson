@@ -31,6 +31,102 @@
       "text": "BLE: record two more throughput experiments (no effect)"
     },
     {
+      "date": "2026-10-13T05:40:45Z",
+      "repo": "esp32_2ghz_radio",
+      "kind": "commit",
+      "text": "Add TXRX mode and a two-way packet link with a 130 us turnaround"
+    },
+    {
+      "date": "2026-10-13T04:20:02Z",
+      "repo": "esp32_2ghz_radio",
+      "kind": "commit",
+      "text": "RX: settle 100 us instead of 3 ms after entering receive"
+    },
+    {
+      "date": "2026-10-12T22:04:22Z",
+      "repo": "esp32_2ghz_radio",
+      "kind": "commit",
+      "text": "Add crystal calibration tool; record TX range and turnaround results"
+    },
+    {
+      "date": "2026-10-12T21:59:22Z",
+      "repo": "esp32_2ghz_radio",
+      "kind": "commit",
+      "text": "TX: crystal calibration, fine deviation, IRAM fix, 2780 MHz cap"
+    },
+    {
+      "date": "2026-10-12T21:13:02Z",
+      "repo": "esp32_2ghz_radio",
+      "kind": "commit",
+      "text": "Add transmitter: FSK/GFSK, BLE advertising, nRF24 ShockBurst"
+    },
+    {
+      "date": "2026-10-12T16:19:29Z",
+      "repo": "esp32_2ghz_radio",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2026-09-18T19:47:41Z",
+      "repo": "mq-9-reaper-fly-brain",
+      "kind": "commit",
+      "text": "fix: tighten default camera distance so the aircraft is actually visible"
+    },
+    {
+      "date": "2026-09-18T19:38:55Z",
+      "repo": "mq-9-reaper-fly-brain",
+      "kind": "commit",
+      "text": "fix: hide box-primitive links properly, point camera at the aircraft"
+    },
+    {
+      "date": "2026-09-18T19:35:34Z",
+      "repo": "mq-9-reaper-fly-brain",
+      "kind": "commit",
+      "text": "feat: mount real MQ-9 mesh (cosmetic skin, no physics change)"
+    },
+    {
+      "date": "2026-09-18T19:29:29Z",
+      "repo": "mq-9-reaper-fly-brain",
+      "kind": "commit",
+      "text": "fix: guarantee connectome indices stay in-bounds; wire terrain/HUD/sk\u2026"
+    },
+    {
+      "date": "2026-09-18T19:18:48Z",
+      "repo": "mq-9-reaper-fly-brain",
+      "kind": "commit",
+      "text": "feat: pull real MaleCNS v1.0 visual-to-descending subnetwork from neu\u2026"
+    },
+    {
+      "date": "2026-09-18T18:02:50Z",
+      "repo": "mq-9-reaper-fly-brain",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
+      "date": "2026-06-05T15:28:04Z",
+      "repo": "w5500_esp_idf",
+      "kind": "commit",
+      "text": "Add initial project files for W5500 Ethernet example"
+    },
+    {
+      "date": "2026-06-05T14:44:22Z",
+      "repo": "w5500_esp_idf",
+      "kind": "commit",
+      "text": "Create README.md"
+    },
+    {
+      "date": "2026-06-05T14:43:53Z",
+      "repo": "w5500_esp_idf",
+      "kind": "commit",
+      "text": "Initial commit"
+    },
+    {
+      "date": "2026-06-05T14:43:52Z",
+      "repo": "w5500_esp_idf",
+      "kind": "new",
+      "text": "repository created"
+    },
+    {
       "date": "2026-05-31T17:16:48Z",
       "repo": "klipper_esp32",
       "kind": "commit",
@@ -47,108 +143,12 @@
       "repo": "klipper_esp32",
       "kind": "commit",
       "text": "Refactor PWM setup to configure timer only after successful initializ\u2026"
-    },
-    {
-      "date": "2026-05-17T21:08:09Z",
-      "repo": "klipper_esp32",
-      "kind": "commit",
-      "text": "Refactor board components for improved performance and maintainabilit\u2026"
-    },
-    {
-      "date": "2026-05-17T20:38:36Z",
-      "repo": "klipper_esp32",
-      "kind": "commit",
-      "text": "Enhance CMake configuration for build artifact management and improve\u2026"
-    },
-    {
-      "date": "2026-05-11T12:09:35Z",
-      "repo": "ble_promiscuous_mode_tx",
-      "kind": "new",
-      "text": "repository created"
-    },
-    {
-      "date": "2026-03-25T17:05:35Z",
-      "repo": "bambu-makerworld",
-      "kind": "commit",
-      "text": "Initial commit"
-    },
-    {
-      "date": "2026-03-25T17:05:34Z",
-      "repo": "bambu-makerworld",
-      "kind": "new",
-      "text": "repository created"
-    },
-    {
-      "date": "2026-02-17T09:05:13Z",
-      "repo": "esp-ndf",
-      "kind": "new",
-      "text": "repository created"
-    },
-    {
-      "date": "2026-01-23T13:17:18Z",
-      "repo": "blackbox",
-      "kind": "commit",
-      "text": "feat: Update ArduPilot message structures and logging for PID Review \u2026"
-    },
-    {
-      "date": "2026-01-23T12:28:39Z",
-      "repo": "blackbox",
-      "kind": "commit",
-      "text": "feat: Add support for ArduPilot FMT and FMTU messages for Mission Pla\u2026"
-    },
-    {
-      "date": "2026-01-23T12:01:51Z",
-      "repo": "blackbox",
-      "kind": "commit",
-      "text": "feat: Enhance logging capabilities with ArduPilot format support and \u2026"
-    },
-    {
-      "date": "2026-01-23T11:34:05Z",
-      "repo": "blackbox",
-      "kind": "commit",
-      "text": "fix: Update license and correct copyright year"
-    },
-    {
-      "date": "2026-01-23T11:29:09Z",
-      "repo": "blackbox",
-      "kind": "commit",
-      "text": "feat: Implement HAL for Blackbox logger with ESP-IDF and POSIX support"
-    },
-    {
-      "date": "2025-12-12T11:49:08Z",
-      "repo": "wch-riscv-compiler",
-      "kind": "commit",
-      "text": "2025"
-    },
-    {
-      "date": "2025-11-28T08:55:48Z",
-      "repo": "blackbox",
-      "kind": "new",
-      "text": "repository created"
-    },
-    {
-      "date": "2025-11-17T12:16:15Z",
-      "repo": "fusion_ahrs_idf",
-      "kind": "commit",
-      "text": "added examples"
-    },
-    {
-      "date": "2025-11-17T11:45:26Z",
-      "repo": "fusion_ahrs_idf",
-      "kind": "commit",
-      "text": "fusion_ahrs_idf"
-    },
-    {
-      "date": "2025-11-17T11:35:07Z",
-      "repo": "fusion_ahrs_idf",
-      "kind": "commit",
-      "text": "WIP"
     }
   ],
   "stars": 134,
-  "repos": 35,
+  "repos": 38,
   "followers": 19,
-  "contributions": 787,
+  "contributions": 789,
   "weekly": [
     38,
     33,
@@ -202,18 +202,18 @@
     22,
     178,
     89,
-    17
+    19
   ],
   "languages": {
     "Jupyter Notebook": 6591,
-    "Python": 8399627,
+    "Python": 8526331,
     "Dockerfile": 1427,
-    "C++": 203641190,
-    "C": 58451710,
+    "C++": 203644068,
+    "C": 58710235,
     "Shell": 1672388,
-    "CMake": 2597048,
+    "CMake": 2600033,
     "Makefile": 476466,
-    "Assembly": 650136,
+    "Assembly": 664146,
     "Roff": 11037421,
     "JavaScript": 482360,
     "Batchfile": 6742,
@@ -224,7 +224,7 @@
     "Swift": 603530,
     "Objective-C": 200729,
     "HTML": 362290,
-    "Linker Script": 62501,
+    "Linker Script": 62945,
     "XC": 93634,
     "PLSQL": 45772,
     "PowerShell": 9033,
