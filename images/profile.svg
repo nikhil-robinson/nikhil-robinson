@@ -36,7 +36,7 @@
     <rect width="1000" height="1306" fill="#070a0e"/>
     <text x="40" y="38" class="x-bar" font-size="13">NR-26 // ENGINEER-ON-CHIP</text>
     <circle cx="711" cy="33" r="5" fill="#3ee6c1" class="x-pulse"/>
-    <text x="960" y="38" class="x-bar" font-size="13" text-anchor="end">ONLINE · SYNC 2026-11-13</text>
+    <text x="960" y="38" class="x-bar" font-size="13" text-anchor="end">ONLINE · SYNC 2026-11-14</text>
     <line x1="40" y1="52" x2="960" y2="52" stroke="#1a2430"/>
     <text x="500" y="100" text-anchor="middle" class="x-name" font-size="42" fill="url(#namegrad)">NIKHIL ROBINSON</text>
     <text x="500" y="130" text-anchor="middle" class="x-sub" font-size="15">EMBEDDED LINUX &amp; FIRMWARE ENGINEER</text>
