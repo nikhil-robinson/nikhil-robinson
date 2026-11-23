@@ -145,8 +145,8 @@
       "text": "Refactor PWM setup to configure timer only after successful initializ\u2026"
     }
   ],
-  "stars": 140,
-  "repos": 38,
+  "stars": 139,
+  "repos": 37,
   "followers": 22,
   "contributions": 1221,
   "weekly": [
@@ -206,13 +206,13 @@
   ],
   "languages": {
     "Jupyter Notebook": 6591,
-    "Python": 8526331,
+    "Python": 8514515,
     "Dockerfile": 1427,
     "C++": 203644068,
     "C": 58710235,
-    "Shell": 1672388,
     "CMake": 2600033,
     "Makefile": 476466,
+    "Shell": 1601032,
     "Assembly": 664146,
     "Roff": 11037421,
     "JavaScript": 482360,
